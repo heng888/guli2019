@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.guli.dao.SkuInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.guli.po.SkuInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="spu_id" property="spuId" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="sku_name" property="skuName" jdbcType="VARCHAR" />
+    <result column="sku_desc" property="skuDesc" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="tm_id" property="tmId" jdbcType="BIGINT" />
+    <result column="catalog3_id" property="catalog3Id" jdbcType="BIGINT" />
+    <result column="sku_default_img" property="skuDefaultImg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, spu_id, price, sku_name, sku_desc, weight, tm_id, catalog3_id, sku_default_img
+  </sql>
+</mapper>

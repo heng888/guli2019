@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.guli.dao.WareSkuMapper" >
+  <resultMap id="BaseResultMap" type="com.neusoft.guli.po.WareSku" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sku_id" property="skuId" jdbcType="BIGINT" />
+    <result column="warehouse_id" property="warehouseId" jdbcType="BIGINT" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="stock_name" property="stockName" jdbcType="VARCHAR" />
+    <result column="stock_locked" property="stockLocked" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, sku_id, warehouse_id, stock, stock_name, stock_locked
+  </sql>
+</mapper>
