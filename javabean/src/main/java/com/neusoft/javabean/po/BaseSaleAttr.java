@@ -1,5 +1,7 @@
 package com.neusoft.javabean.po;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -10,6 +12,7 @@ public class BaseSaleAttr implements Serializable {
      * 编号
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**

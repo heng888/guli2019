@@ -37,9 +37,15 @@
     </div>
     
     <script language="JavaScript">
+
+        function closeSpuSaleAttr() {
+            $("#spuSaleAttr_dlg").dialog("close")
+        }
+
         function saveSpuSaleAttr() {
             // 获得销售属性值列表的数据(json)
             var data = $("#spuSaleAttrValueDg").datagrid("getData");
+            //打印到控制台查看
             console.log(JSON.stringify(data));
             // 保存spu对话框的销售属性的暂存区
             var saleAttrId = $("#saleAttrSelect").combobox("getValue");
@@ -47,6 +53,8 @@
             $("#spuSaleAttrDg").datagrid("appendRow",{
                 saleAttrId:saleAttrId,saleAttrName:saleAttrName,spuSaleAttrValueJson:data
             });
+
+
 
             // 关闭spu销售属性对话框
             $("#spuSaleAttr_dlg").dialog("close");

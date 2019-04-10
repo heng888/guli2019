@@ -1,8 +1,6 @@
 package com.neusoft.javabean.po;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Table(name = "sku_sale_attr_value")
@@ -11,6 +9,7 @@ public class SkuSaleAttrValue implements Serializable {
      * id
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**

@@ -1,8 +1,6 @@
 package com.neusoft.javabean.po;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "base_catalog1_tm")
 public class BaseCatalog1Tm {
@@ -10,6 +8,7 @@ public class BaseCatalog1Tm {
      * 编号
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**

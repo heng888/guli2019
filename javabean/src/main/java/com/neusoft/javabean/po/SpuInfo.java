@@ -1,9 +1,8 @@
 package com.neusoft.javabean.po;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Table(name = "spu_info")
 public class SpuInfo implements Serializable {
@@ -11,6 +10,7 @@ public class SpuInfo implements Serializable {
      * 商品id
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -35,6 +35,28 @@ public class SpuInfo implements Serializable {
      */
     @Column(name = "tm_id")
     private Long tmId;
+
+    private List<SpuSaleAttr> spuSaleAttrList;
+
+    @Override
+    public String toString() {
+        return "SpuInfo{" +
+                "id=" + id +
+                ", spuName='" + spuName + '\'' +
+                ", description='" + description + '\'' +
+                ", catalog3Id=" + catalog3Id +
+                ", tmId=" + tmId +
+                ", spuSaleAttrList=" + spuSaleAttrList +
+                '}';
+    }
+
+    public List<SpuSaleAttr> getSpuSaleAttrList() {
+        return spuSaleAttrList;
+    }
+
+    public void setSpuSaleAttrList(List<SpuSaleAttr> spuSaleAttrList) {
+        this.spuSaleAttrList = spuSaleAttrList;
+    }
 
     /**
      * 获取商品id

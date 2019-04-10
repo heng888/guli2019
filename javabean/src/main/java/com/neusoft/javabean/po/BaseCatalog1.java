@@ -9,11 +9,12 @@ import java.io.Serializable;
 @Table(name = "base_catalog1")
 public class BaseCatalog1 implements Serializable {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     /**
      * 编号
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**

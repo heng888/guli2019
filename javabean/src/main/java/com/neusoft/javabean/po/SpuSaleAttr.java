@@ -1,9 +1,8 @@
 package com.neusoft.javabean.po;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Table(name = "spu_sale_attr")
 public class SpuSaleAttr implements Serializable {
@@ -11,6 +10,7 @@ public class SpuSaleAttr implements Serializable {
      * 编号(业务中无关联)
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -24,6 +24,16 @@ public class SpuSaleAttr implements Serializable {
      */
     @Column(name = "sale_attr_id")
     private Long saleAttrId;
+
+    private List<SpuSaleAttrValue> spuSaleAttrValueList;
+
+    public List<SpuSaleAttrValue> getSpuSaleAttrValueList() {
+        return spuSaleAttrValueList;
+    }
+
+    public void setSpuSaleAttrValueList(List<SpuSaleAttrValue> spuSaleAttrValueList) {
+        this.spuSaleAttrValueList = spuSaleAttrValueList;
+    }
 
     /**
      * 销售属性名称(冗余)
@@ -101,5 +111,16 @@ public class SpuSaleAttr implements Serializable {
      */
     public void setSaleAttrName(String saleAttrName) {
         this.saleAttrName = saleAttrName == null ? null : saleAttrName.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "SpuSaleAttr{" +
+                "id=" + id +
+                ", spuId=" + spuId +
+                ", saleAttrId=" + saleAttrId +
+                ", spuSaleAttrValueList=" + spuSaleAttrValueList +
+                ", saleAttrName='" + saleAttrName + '\'' +
+                '}';
     }
 }

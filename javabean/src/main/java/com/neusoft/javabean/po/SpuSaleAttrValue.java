@@ -1,8 +1,6 @@
 package com.neusoft.javabean.po;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Table(name = "spu_sale_attr_value")
@@ -11,6 +9,7 @@ public class SpuSaleAttrValue implements Serializable {
      * 销售属性值编号
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
@@ -101,5 +100,15 @@ public class SpuSaleAttrValue implements Serializable {
      */
     public void setSaleAttrValueName(String saleAttrValueName) {
         this.saleAttrValueName = saleAttrValueName == null ? null : saleAttrValueName.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "SpuSaleAttrValue{" +
+                "id=" + id +
+                ", spuId=" + spuId +
+                ", saleAttrId=" + saleAttrId +
+                ", saleAttrValueName='" + saleAttrValueName + '\'' +
+                '}';
     }
 }

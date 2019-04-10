@@ -83,16 +83,17 @@
     
     function addAttr() {
 
-        // 清空attrName
-        $("#attrName").textbox("setText",null);
-        //清空表格数据
-        $("#fm1").form('clear');
-
         var catalog3Id = $("#ctg3ForAttrList").combobox("getValue");
 
         // 打开属性添加的对话框
         if(catalog3Id){
             $("#dlg").dialog("open");
+            // 清空attrName
+            $("#attrName").textbox("setText",null);
+            $("#dg_av").datagrid({url:''});
+            $("#dg_av").datagrid('loadData', { total: 0, rows: [] });//行号初始化
+            //清空表格数据
+            $("#fm1").form('clear');
             // 初始化
             initAttrValueDatagrid();
         }else{

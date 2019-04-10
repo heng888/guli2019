@@ -24,7 +24,6 @@
 
 
     <dependencies>
-
         <dependency>
             <groupId>com.neusoft</groupId>
             <artifactId>common-util</artifactId>
