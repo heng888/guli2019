@@ -42,28 +42,34 @@
             $("#spuSaleAttr_dlg").dialog("close")
         }
 
-        function saveSpuSaleAttr() {
-            // 获得销售属性值列表的数据(json)
-            var data = $("#spuSaleAttrValueDg").datagrid("getData");
-            //打印到控制台查看
-            console.log(JSON.stringify(data));
-            // 保存spu对话框的销售属性的暂存区
-            var saleAttrId = $("#saleAttrSelect").combobox("getValue");
-            var saleAttrName = $("#saleAttrSelect").combobox("getText");
-            $("#spuSaleAttrDg").datagrid("appendRow",{
-                saleAttrId:saleAttrId,saleAttrName:saleAttrName,spuSaleAttrValueJson:data
-            });
 
-
-
-            // 关闭spu销售属性对话框
-            $("#spuSaleAttr_dlg").dialog("close");
-        }
         
-        function initSpuSaleAttrDlg() {
-            // 初始化销售属性的combobox
+        function initSpuSaleAttrDlg(spuSaleAttr) {
 
+            // 初始化销售属性的combobox
             initSpuSaleAttrValueListDatagrid();
+
+            //清空缓存
+            $("#spuSaleAttrValueDg").datagrid({url:''});
+            $("#spuSaleAttrValueDg").datagrid('loadData', { total: 0, rows: [] });//行号初始化
+            if(spuSaleAttr){
+                //回显基本销售属性
+                //$("#saleAttrSelect").combobox({disabled: true});
+                $('#saleAttrSelect').combobox('setValue',spuSaleAttr.saleAttrId);
+
+                //回显销售属性值
+                var spuSaleAttrValue = spuSaleAttr.spuSaleAttrValueList;
+                console.log(spuSaleAttrValue);
+
+
+                $("#spuSaleAttrValueDg").datagrid('loadData',spuSaleAttrValue);
+/*                var spuSaleAttrValue={};
+                spuSaleAttrValue["spuId"]=spuSaleAttr.spuId;
+                spuSaleAttrValue["saleAttrId"]=spuSaleAttr.saleAttrId;
+                $.post("spuSaleAttrValueBySaleAttrId",spuSaleAttrValue,function (data) {
+                    $("#spuSaleAttrValueDg").datagrid("loadData",data);
+                });*/
+            }
         }
         
         function initSpuSaleAttrValueListDatagrid() {
@@ -102,6 +108,31 @@
             var index = $("#spuSaleAttrValueDg").datagrid("getRowIndex",row);
             // 根据行号删除
             $("#spuSaleAttrValueDg").datagrid("deleteRow",index);
+        }
+
+        function saveSpuSaleAttr() {
+            // 获得销售属性值列表的数据(json)
+            var data = $("#spuSaleAttrValueDg").datagrid("getData");
+            //打印到控制台查看
+            console.log(JSON.stringify(data));
+            // 保存spu对话框的销售属性的暂存区
+            var saleAttrId = $("#saleAttrSelect").combobox("getValue");
+            var saleAttrName = $("#saleAttrSelect").combobox("getText");
+            var temp =$("#spuSaleAttrDg").datagrid("getData");
+            var spuSaleAttr = temp.rows;
+            $(spuSaleAttr).each(function(i,data){
+                var id = data.saleAttrId
+                if(saleAttrId == id){
+                    var index = $("#spuSaleAttrDg").datagrid("getRowIndex",data);
+                    $("#spuSaleAttrDg").datagrid("deleteRow",index);
+                }
+            });
+            $("#spuSaleAttrDg").datagrid("appendRow",{
+                saleAttrId:saleAttrId,saleAttrName:saleAttrName,spuSaleAttrValueList:data
+            });
+
+            // 关闭spu销售属性对话框
+            $("#spuSaleAttr_dlg").dialog("close");
         }
     </script>
 </div>

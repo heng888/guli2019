@@ -1,7 +1,6 @@
 package com.neusoft.interfaces;
 
-import com.neusoft.javabean.po.BaseSaleAttr;
-import com.neusoft.javabean.po.SpuInfo;
+import com.neusoft.javabean.po.*;
 
 import java.util.List;
 
@@ -14,4 +13,26 @@ public interface SpuService {
 
     //添加spu属性及spu销售属性值
     void saveSpu(SpuInfo spuInfo);
+
+    //根据spuId查询spuImage信息
+    List<SpuImage> selectSpuImageBySpuId(Long spuId);
+
+    //删除spu跟关联的spuImage、spuAttr、spuAttrValue
+    void deleteSpuInfo(Long spuId);
+
+    //根据spuId查询SpuSaleAttr信息
+    List<SpuSaleAttr> selectSpuSaleAttrBySpuId(Long spuId);
+
+    //根据saleAttrId和spuid查询SpuSaleAttrValue
+    List<SpuSaleAttrValue> spuSaleAttrValueBySaleAttrId(SpuSaleAttrValue spuSaleAttrValue);
+
+    //根据spuId查询查询SpuSaleAttr跟SpuSaleAttrValue
+    List<SpuSaleAttr> selectSaleAttrAndAttrValueByspuId(Long spuId);
+
+    //修改Spu
+    void updateSpu(SpuInfo spuInfo);
+
+    //根据spuId查询spu相关的Attr  AttrValue
+    List<SpuSaleAttr> selectSpuAll(Long spuId);
+
 }

@@ -76,7 +76,6 @@
 
     function  initAttrInfoGroup(catalog3Id) {
         $.post("getAttrListByCtg3Id",{catalog3Id:catalog3Id},function(data){
-
             var append = "";
             $(data).each(function(i,attr){
 

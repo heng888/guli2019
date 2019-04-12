@@ -38,6 +38,16 @@ public class SpuInfo implements Serializable {
 
     private List<SpuSaleAttr> spuSaleAttrList;
 
+    private List<SpuImage> spuImageList;
+
+    public List<SpuImage> getSpuImageList() {
+        return spuImageList;
+    }
+
+    public void setSpuImageList(List<SpuImage> spuImageList) {
+        this.spuImageList = spuImageList;
+    }
+
     @Override
     public String toString() {
         return "SpuInfo{" +
@@ -47,6 +57,7 @@ public class SpuInfo implements Serializable {
                 ", catalog3Id=" + catalog3Id +
                 ", tmId=" + tmId +
                 ", spuSaleAttrList=" + spuSaleAttrList +
+                ", spuImageList=" + spuImageList +
                 '}';
     }
 

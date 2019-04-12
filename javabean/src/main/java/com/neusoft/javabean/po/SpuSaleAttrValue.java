@@ -30,6 +30,8 @@ public class SpuSaleAttrValue implements Serializable {
     @Column(name = "sale_attr_value_name")
     private String saleAttrValueName;
 
+
+
     /**
      * 获取销售属性值编号
      *

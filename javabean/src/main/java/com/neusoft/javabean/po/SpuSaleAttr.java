@@ -27,6 +27,7 @@ public class SpuSaleAttr implements Serializable {
 
     private List<SpuSaleAttrValue> spuSaleAttrValueList;
 
+
     public List<SpuSaleAttrValue> getSpuSaleAttrValueList() {
         return spuSaleAttrValueList;
     }

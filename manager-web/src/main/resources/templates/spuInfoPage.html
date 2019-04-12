@@ -27,9 +27,9 @@
             <!----------------图片列表工具栏----------------------->
             <div id="spuImgTootbar" style="padding:5px;height:auto"  >
                 <div style="margin-bottom:5px">
-                    <a href="#" id="spuImgAdd" class="easyui-linkbutton" iconCls="icon-remove" plain="true">添加图片</a>
+                    <a href="#" id="spuImgAdd" class="easyui-linkbutton" iconCls="icon-save" plain="true">添加图片</a>
                     <a href="#" id="spuImgUploadBtn" class="easyui-linkbutton" iconCls="icon-save" plain="true" >图片上传</a>
-                    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+                    <a href="#" id="spuImgDelete" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteImage()">删除</a>
                 </div>
             </div>
 
@@ -41,7 +41,7 @@
             <!----------------销售属性列表工具栏----------------------->
             <div id="spuSaleAttrTootbar" style="padding:5px;height:auto"  >
                 <div style="margin-bottom:5px">
-                    <a href="#" id="spuSaleAttrAddBtn" class="easyui-linkbutton" iconCls="icon-add" onclick="addSpuSaleAttr()" plain="true">添加销售属性</a>
+                    <a href="#" id="spuSaleAttrAddBtn" class="easyui-linkbutton"  iconCls="icon-add" onclick="addSpuSaleAttr()" plain="true">添加销售属性</a>
                     <a href="#" id="spuSaleAttrEditBtn" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editSpuSaleAttr()">编辑销售属性</a>
                     <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteSpuSaleAttr()">删除</a>
                 </div>
@@ -58,6 +58,32 @@
     </div>
 
 <script language="JavaScript">
+
+        function editSpuSaleAttr() {
+
+
+            var spuSaleAttr = $("#spuSaleAttrDg").datagrid("getSelected")
+
+            if(spuSaleAttr){
+                $("#spuSaleAttr_dlg").dialog("open");
+                // 初始化spu销售属性对话框
+                initSpuSaleAttrDlg(spuSaleAttr);
+            }else {
+                alert("请选择需要编辑的销售属性！")
+            }
+        }
+
+        function deleteImage() {
+            //获取选中的行
+            var row = $("#spuImgDg").datagrid("getSelected");
+            //获取选中行的索引
+            var index = $("#spuImgDg").datagrid("getRowIndex",row);
+            //根据索引删除行
+            $("#spuImgDg").datagrid("deleteRow",index);
+        }
+
+
+
         function deleteSpuSaleAttr() {
             //获取选中的行
             var row = $("#spuSaleAttrDg").datagrid("getSelected");
@@ -72,11 +98,47 @@
             $("#spu_dlg").dialog("close");
         }
 
+
+        function initSpuInfoDlg(spuInfo) {
+            // 初始化上传控件插件(webuploader)
+            initUploader();
+            // 初始化图片列表
+            initSpuImgListDatagrid();
+            // 初始化销售属性
+            initSpuSaleAttrListDatagrid();
+
+            if(spuInfo){
+                //给spu赋值
+                /*$("#spuName").val(spuInfo.spuName);
+                $("#description").val(spuInfo.description)
+                */
+                 $("#spuName").textbox("setValue",spuInfo.spuName);
+                 $("#description").textbox("setValue",spuInfo.description);
+
+                var spuId =  spuInfo.id;
+
+                //给图片列表赋值
+                $("#spuImgDg").datagrid({
+                    url:"selectSpuImage?spuId="+spuId,
+                })
+
+
+                //给销售属性赋值
+                $("#spuSaleAttrDg").datagrid({
+                    url:"selectSpuAll?spuId="+spuId,
+                })
+
+                //ocument.getElementById("spuId").value=spuId;
+                $("#spuId").val(spuId);
+            }
+        }
+
         function saveSpu() {
            // 获取spu的json格式的js数据对象
             var spuInfo = {};
             spuInfo["spuName"] = $("#spuName").textbox("getValue");
             spuInfo["description"] = $("#description").textbox("getValue");
+            spuInfo["id"]=$("#spuId").val();
             var catalog3Id = $("#ctg3ForSpuList").combobox("getValue");
             spuInfo["catalog3Id"] = catalog3Id;
             var attrRows = $("#spuSaleAttrDg").datagrid("getRows");
@@ -85,11 +147,22 @@
                 spuInfo["spuSaleAttrList["+i+"].saleAttrId"]=attr.saleAttrId;
                 spuInfo["spuSaleAttrList["+i+"].saleAttrName"]=attr.saleAttrName;
                 // 封装销售属性值
-                var attrValueRows = attr.spuSaleAttrValueJson.rows;
-                $(attrValueRows).each(function(j,attrValue){
-                    spuInfo["spuSaleAttrList["+i+"].spuSaleAttrValueList["+j+"].saleAttrId"] = attr.saleAttrId;
-                    spuInfo["spuSaleAttrList["+i+"].spuSaleAttrValueList["+j+"].saleAttrValueName"] = attrValue.saleAttrValueName;
-                })
+                var attrValueRows = attr.spuSaleAttrValueList.rows;
+                console.log(attr.spuSaleAttrValueList);
+                if(attrValueRows){
+                    $(attrValueRows).each(function(j,attrValue){
+                        spuInfo["spuSaleAttrList["+i+"].spuSaleAttrValueList["+j+"].saleAttrId"] = attr.saleAttrId;
+                        spuInfo["spuSaleAttrList["+i+"].spuSaleAttrValueList["+j+"].saleAttrValueName"] = attrValue.saleAttrValueName;
+                    })
+                }else{
+                   var  attrValueRows1 = attr.spuSaleAttrValueList
+                    $(attrValueRows1).each(function(j,attrValue){
+                        spuInfo["spuSaleAttrList["+i+"].spuSaleAttrValueList["+j+"].saleAttrId"] = attr.saleAttrId;
+                        spuInfo["spuSaleAttrList["+i+"].spuSaleAttrValueList["+j+"].saleAttrValueName"] = attrValue.saleAttrValueName;
+                    })
+
+                }
+
             });
 
             // 封装图片信息
@@ -102,6 +175,19 @@
             // 异步保存
             $.post("saveSpu",spuInfo,function (data) {
                 alert(data);
+                // spu名称 初始化
+                $("#spuName").textbox("setText",null);
+                // spu描述 初始化
+                $("#description").textbox("setText",null);
+                // spu描述 初始化
+                $("#spuId").val('');
+                //清空缓存
+                $("#spuImgDg").datagrid({url:''});
+                $("#spuImgDg").datagrid('loadData', { total: 0, rows: [] });//行号初始化
+                //清空缓存
+                $("#spuSaleAttrDg").datagrid({url:''});
+                $("#spuSaleAttrDg").datagrid('loadData', { total: 0, rows: [] });//行号初始化
+
                 // 关闭对话框
                 $("#spu_dlg").dialog("close")
                 // 刷新spu列表
@@ -109,16 +195,7 @@
                 $('#spulist_dg').datagrid({url:'spuList?catalog3Id='+catalog3Id});
             });
         }
-    
-        function initSpuInfoDlg() {
-            // 初始化上传控件插件(webuploader)
-            initUploader();
-            // 初始化图片列表
-            initSpuImgListDatagrid();
-            // 初始化销售属性
-            initSpuSaleAttrListDatagrid();
 
-        }
 
         // 初始化上传控件插件
         function initUploader(){
@@ -177,7 +254,7 @@
             $('#spuImgUploadBtn').click(function(){
                 console.log("开始上传");
                 if(spuImgUploader.getFiles().length<=0){
-                    $.messager().alert('警告','没有需要上传的文件','warning');
+                    //$.messager().alert('警告','没有需要上传的文件','warning');
                     return;
                 }
                 spuImgUploader.upload();
@@ -239,9 +316,10 @@
             $("#spuSaleAttrDg").datagrid({
                 columns:[[
                     {field:'id',title:'id',width:100,hidden:true},
+                    {field:'spuId',title:'spuId',width:100,hidden:true},
                     {field:'saleAttrId',title:'销售属性id',width:100},
                     {field:'saleAttrName',title:'销售属性简称',width:100},
-                    {field:'spuSaleAttrValueJson',title:'页面暂存',width:200,align:'right'}
+                    {field:'spuSaleAttrValueList',title:'页面暂存',width:200,align:'right'}
                 ]]
             });
         }
@@ -250,8 +328,6 @@
             // 打开spu的销售属性对话框
             $("#spuSaleAttr_dlg").dialog("open");
             $("#spuSaleAttrValueDg").datagrid('loadData', { total: 0, rows: [] });//行号初始化
-            //销售属性combobox初始化
-
             // 初始化spu销售属性对话框
             initSpuSaleAttrDlg();
         }

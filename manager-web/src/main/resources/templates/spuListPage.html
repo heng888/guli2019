@@ -22,7 +22,7 @@
         <div style="margin-bottom:5px">
             <a href="#"class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addSpuInfo()">添加</a>
             <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editSpuInfo()">编辑</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteSpuInfo()">删除</a>
             <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addSkuInfo()">增加sku</a>
             <a href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="showSkuInfoList()"> sku列表</a>
         </div>
@@ -62,6 +62,50 @@
         $('#spulist_dg').datagrid({url:'spuList?catalog3Id='+rec.id});
     }*/
 
+   function deleteSpuInfo() {
+       var spuInfo =$("#spulist_dg").datagrid("getSelected");
+       var catalog3Id = $("#ctg3ForSpuList").combobox("getValue");
+       if(spuInfo){
+           if(confirm("是否确定删除？")){
+               $.get("deleteSpuInfo?spuId="+spuInfo.id,function (data) {
+                    alert("删除成功！")
+                   $('#spulist_dg').datagrid({url:'spuList?catalog3Id='+catalog3Id});
+               });
+           }
+       }else {
+           alert("请选择要删除的SPU")
+       }
+   }
+
+
+   function editSpuInfo() {
+       // spu名称 初始化
+       $("#spuName").textbox("setText",null);
+       // spu描述 初始化
+       $("#description").textbox("setText",null);
+       // spu描述 初始化
+       $("#spuId").val('');
+       //清空缓存
+       $("#spuImgDg").datagrid({url:''});
+       $("#spuImgDg").datagrid('loadData', { total: 0, rows: [] });//行号初始化
+       //清空缓存
+       $("#spuSaleAttrDg").datagrid({url:''});
+       $("#spuSaleAttrDg").datagrid('loadData', { total: 0, rows: [] });//行号初始化
+
+
+
+       var spuInfo = $("#spulist_dg").datagrid("getSelected");
+       if(spuInfo){
+           // 打开spu添加的对话框
+           $("#spu_dlg").dialog("open");
+           initSpuInfoDlg(spuInfo);
+       }else{
+           alert("请选择需要修改的SPU");
+       }
+   }
+
+
+
     function showSkuInfoList() {
         // 打开sku对话框
         $("#skulist_dlg").dialog("open");
@@ -75,10 +119,8 @@
     function addSkuInfo() {
         // 打开sku添加的对话框
         $("#sku_dlg").dialog("open");
-
         // 初始化对话框
         var spuInfo = $("#spulist_dg").datagrid("getSelected");
-
         initSkuInfoDlg(spuInfo);
 
     }
@@ -97,15 +139,24 @@
         var ctg3ForSpuList = $("#ctg3ForSpuList").combobox("getValue");
 
         if(ctg3ForSpuList){
-            //打开一个spu添加的对话框
-            $("#spu_dlg").dialog("open");
-            $("#spuSaleAttrDg").datagrid('loadData', { total: 0, rows: [] });//行号初始化
             // spu名称 初始化
             $("#spuName").textbox("setText",null);
             // spu描述 初始化
             $("#description").textbox("setText",null);
+            // spu描述 初始化
+            $("#spuId").val('');
+            //清空缓存
+            $("#spuImgDg").datagrid({url:''});
+            $("#spuImgDg").datagrid('loadData', { total: 0, rows: [] });//行号初始化
+            //清空缓存
+            $("#spuSaleAttrDg").datagrid({url:''});
+            $("#spuSaleAttrDg").datagrid('loadData', { total: 0, rows: [] });//行号初始化
+            //打开一个spu添加的对话框
+            $("#spu_dlg").dialog("open");
+
             // 初始化对话框
             initSpuInfoDlg();
+
         }else{
             alert("请选择三级分类")
         }
