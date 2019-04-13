@@ -149,4 +149,16 @@ public class SkuSaleAttrValue implements Serializable {
     public void setSaleAttrValueName(String saleAttrValueName) {
         this.saleAttrValueName = saleAttrValueName == null ? null : saleAttrValueName.trim();
     }
+
+    @Override
+    public String toString() {
+        return "SkuSaleAttrValue{" +
+                "id=" + id +
+                ", skuId=" + skuId +
+                ", saleAttrId=" + saleAttrId +
+                ", saleAttrValueId=" + saleAttrValueId +
+                ", saleAttrName='" + saleAttrName + '\'' +
+                ", saleAttrValueName='" + saleAttrValueName + '\'' +
+                '}';
+    }
 }

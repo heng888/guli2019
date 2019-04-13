@@ -43,7 +43,7 @@
         }
 
 
-        
+
         function initSpuSaleAttrDlg(spuSaleAttr) {
 
             // 初始化销售属性的combobox
@@ -60,7 +60,6 @@
                 //回显销售属性值
                 var spuSaleAttrValue = spuSaleAttr.spuSaleAttrValueList;
                 console.log(spuSaleAttrValue);
-
 
                 $("#spuSaleAttrValueDg").datagrid('loadData',spuSaleAttrValue);
 /*                var spuSaleAttrValue={};
@@ -113,26 +112,30 @@
         function saveSpuSaleAttr() {
             // 获得销售属性值列表的数据(json)
             var data = $("#spuSaleAttrValueDg").datagrid("getData");
-            //打印到控制台查看
-            console.log(JSON.stringify(data));
-            // 保存spu对话框的销售属性的暂存区
-            var saleAttrId = $("#saleAttrSelect").combobox("getValue");
-            var saleAttrName = $("#saleAttrSelect").combobox("getText");
-            var temp =$("#spuSaleAttrDg").datagrid("getData");
-            var spuSaleAttr = temp.rows;
-            $(spuSaleAttr).each(function(i,data){
-                var id = data.saleAttrId
-                if(saleAttrId == id){
-                    var index = $("#spuSaleAttrDg").datagrid("getRowIndex",data);
-                    $("#spuSaleAttrDg").datagrid("deleteRow",index);
-                }
-            });
-            $("#spuSaleAttrDg").datagrid("appendRow",{
-                saleAttrId:saleAttrId,saleAttrName:saleAttrName,spuSaleAttrValueList:data
-            });
+           if(data.row){
+               //打印到控制台查看
+               console.log(JSON.stringify(data));
+               // 保存spu对话框的销售属性的暂存区
+               var saleAttrId = $("#saleAttrSelect").combobox("getValue");
+               var saleAttrName = $("#saleAttrSelect").combobox("getText");
+               var temp =$("#spuSaleAttrDg").datagrid("getData");
+               var spuSaleAttr = temp.rows;
+               $(spuSaleAttr).each(function(i,data){
+                   var id = data.saleAttrId
+                   if(saleAttrId == id){
+                       var index = $("#spuSaleAttrDg").datagrid("getRowIndex",data);
+                       $("#spuSaleAttrDg").datagrid("deleteRow",index);
+                   }
+               });
+               $("#spuSaleAttrDg").datagrid("appendRow",{
+                   saleAttrId:saleAttrId,saleAttrName:saleAttrName,spuSaleAttrValueList:data
+               });
 
-            // 关闭spu销售属性对话框
-            $("#spuSaleAttr_dlg").dialog("close");
+               // 关闭spu销售属性对话框
+               $("#spuSaleAttr_dlg").dialog("close");
+           }else{
+               alert("没有输入销售属性值，不能保存")
+           }
         }
     </script>
 </div>

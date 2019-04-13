@@ -3,6 +3,7 @@ package com.neusoft.javabean.po;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Table(name = "sku_info")
 public class SkuInfo implements Serializable {
@@ -58,6 +59,36 @@ public class SkuInfo implements Serializable {
      */
     @Column(name = "sku_default_img")
     private String skuDefaultImg;
+
+    private List<SkuImage> skuImageList;
+
+    private List<SkuAttrValue> skuAttrValueList;
+
+    private List<SkuSaleAttrValue> skuSaleAttrValueList;
+
+    public List<SkuImage> getSkuImageList() {
+        return skuImageList;
+    }
+
+    public void setSkuImageList(List<SkuImage> skuImageList) {
+        this.skuImageList = skuImageList;
+    }
+
+    public List<SkuAttrValue> getSkuAttrValueList() {
+        return skuAttrValueList;
+    }
+
+    public void setSkuAttrValueList(List<SkuAttrValue> skuAttrValueList) {
+        this.skuAttrValueList = skuAttrValueList;
+    }
+
+    public List<SkuSaleAttrValue> getSkuSaleAttrValueList() {
+        return skuSaleAttrValueList;
+    }
+
+    public void setSkuSaleAttrValueList(List<SkuSaleAttrValue> skuSaleAttrValueList) {
+        this.skuSaleAttrValueList = skuSaleAttrValueList;
+    }
 
     /**
      * 获取库存id(itemID)
@@ -219,5 +250,23 @@ public class SkuInfo implements Serializable {
      */
     public void setSkuDefaultImg(String skuDefaultImg) {
         this.skuDefaultImg = skuDefaultImg == null ? null : skuDefaultImg.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "SkuInfo{" +
+                "id=" + id +
+                ", spuId=" + spuId +
+                ", price=" + price +
+                ", skuName='" + skuName + '\'' +
+                ", skuDesc='" + skuDesc + '\'' +
+                ", weight=" + weight +
+                ", tmId=" + tmId +
+                ", catalog3Id=" + catalog3Id +
+                ", skuDefaultImg='" + skuDefaultImg + '\'' +
+                ", skuImageList=" + skuImageList +
+                ", skuAttrValueList=" + skuAttrValueList +
+                ", skuSaleAttrValueList=" + skuSaleAttrValueList +
+                '}';
     }
 }

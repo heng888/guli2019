@@ -101,4 +101,14 @@ public class SkuAttrValue implements Serializable {
     public void setSkuId(Long skuId) {
         this.skuId = skuId;
     }
+
+    @Override
+    public String toString() {
+        return "SkuAttrValue{" +
+                "id=" + id +
+                ", attrId=" + attrId +
+                ", valueId=" + valueId +
+                ", skuId=" + skuId +
+                '}';
+    }
 }

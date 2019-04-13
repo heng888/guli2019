@@ -1,12 +1,14 @@
-package com.neusoft.managerservice.dao;
-
+package com.neusoft.interfaces;
 
 import com.neusoft.javabean.po.SkuInfo;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-public interface SkuInfoMapper extends Mapper<SkuInfo> {
+public interface SkuService {
+    List<SkuInfo> getSkuListBySpu(Long spuId);
     //查询skuInfo相关的spuImage、spuAttrValue、spuSaleAttrValue
     List<SkuInfo> selectSkuInfoBySpuId(Long spuId);
+
+    //新增skuInfo
+    void saveSku(SkuInfo skuInfo);
 }

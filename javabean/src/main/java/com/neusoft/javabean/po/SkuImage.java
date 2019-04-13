@@ -149,4 +149,16 @@ public class SkuImage implements Serializable {
     public void setIsDefault(String isDefault) {
         this.isDefault = isDefault == null ? null : isDefault.trim();
     }
+
+    @Override
+    public String toString() {
+        return "SkuImage{" +
+                "id=" + id +
+                ", skuId=" + skuId +
+                ", imgName='" + imgName + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", spuImgId=" + spuImgId +
+                ", isDefault='" + isDefault + '\'' +
+                '}';
+    }
 }

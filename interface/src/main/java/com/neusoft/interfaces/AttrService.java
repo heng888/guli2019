@@ -25,4 +25,7 @@ public interface AttrService {
 
     //修改属性
     void updateAttr(BaseAttrInfo baseAttrInfo);
+
+    //通过三级分类的id查询三属性表及属性值
+    List<BaseAttrInfo> selectAttrInfoAndValueByCatalog3(Long catalog3Id);
 }

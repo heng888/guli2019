@@ -111,17 +111,38 @@
         $("#skulist_dlg").dialog("open");
         // spuInfo
         var spuInfo = $("#spulist_dg").datagrid("getSelected");
-        // 初始化sku数据列表
-        initSkuListDatagrid(spuInfo);
+
+        if(spuInfo){
+            // 初始化sku数据列表
+            initSkuListDatagrid(spuInfo);
+        }else{
+            alert("请选择SPU")
+        }
+
 
     }
     
     function addSkuInfo() {
-        // 打开sku添加的对话框
-        $("#sku_dlg").dialog("open");
+       $("#skuName").textbox("setText",null);
+       $("#price").numberbox("setText",null);
+       $("#weight").numberbox("setText",null);
+       $("#skuDesc").textbox("setText",null);
+       $("#spuIdForSku").val(null);
+       $("#catalog3IdForSku").val(null);
+       $("#skuInfo").val(null);
+       $("#skuId").val(null);
+
+
         // 初始化对话框
         var spuInfo = $("#spulist_dg").datagrid("getSelected");
-        initSkuInfoDlg(spuInfo);
+        if(spuInfo){
+
+            // 打开sku添加的对话框
+            $("#sku_dlg").dialog("open");
+            initSkuInfoDlg(spuInfo);
+        }else{
+            alert("请选择SPU")
+        }
 
     }
     
