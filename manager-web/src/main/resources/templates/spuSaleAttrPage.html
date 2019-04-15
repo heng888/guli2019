@@ -111,8 +111,8 @@
 
         function saveSpuSaleAttr() {
             // 获得销售属性值列表的数据(json)
-            var data = $("#spuSaleAttrValueDg").datagrid("getData");
-           if(data.row){
+            var data = $("#spuSaleAttrValueDg").datagrid("getRows");
+           if(data[0]){
                //打印到控制台查看
                console.log(JSON.stringify(data));
                // 保存spu对话框的销售属性的暂存区

@@ -76,6 +76,32 @@ public class SkuServiceImpl implements SkuService {
             skuSaleAttrValue.setSkuId(skuInfoId);
             skuSaleAttrValueMapper.insert(skuSaleAttrValue);
         }
-
     }
+
+
+    /**
+     * 删除sku
+     * @param skuId
+     */
+    @Override
+    public void deleteSkuInfo(Long skuId) {
+        //删除SkuImage
+        SkuImage skuImage = new SkuImage();
+        skuImage.setSkuId(skuId);
+        skuImageMapper.delete(skuImage);
+
+        //删除SkuAttrValue
+        SkuAttrValue skuAttrValue = new SkuAttrValue();
+        skuAttrValue.setSkuId(skuId);
+        skuAttrValueMapper.delete(skuAttrValue);
+
+        //删除SkuSaleAttrValue
+        SkuSaleAttrValue skuSaleAttrValue = new SkuSaleAttrValue();
+        skuSaleAttrValue.setSkuId(skuId);
+        skuSaleAttrValueMapper.delete(skuSaleAttrValue);
+
+        //删除SkuInfo
+        skuInfoMapper.deleteByPrimaryKey(skuId);
+    }
+
 }

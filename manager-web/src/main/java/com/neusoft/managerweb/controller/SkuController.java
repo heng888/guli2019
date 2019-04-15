@@ -35,4 +35,14 @@ public class SkuController {
         skuService.saveSku(skuInfo);
         return "新增成功";
     }
+
+    /**
+     * 删除sku
+     */
+    @RequestMapping("deleteSkuInfo")
+    @ResponseBody
+    public String deleteSkuInfo(Long skuId){
+        skuService.deleteSkuInfo(skuId);
+        return "删除成功";
+    }
 }

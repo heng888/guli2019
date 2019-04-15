@@ -30,7 +30,7 @@
         <div style="margin-bottom:5px">
 
             <a href="#" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editSkuInfo()">编辑</a>
-            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteSkuInfo()">删除</a>
         </div>
         <input id="spuIdForSkuList" name="spuIdForSkuId" type="hidden"/>
         <input id="catalog3IdForSkuList" name="catalog3IdForSkuId" type="hidden"/>
@@ -42,9 +42,36 @@
 
 <script language="JavaScript">
 
+    function deleteSkuInfo() {
+        var skuInfo = $("#skulist_dg").datagrid("getSelected");
+        if(skuInfo){
+            //删除sku
+            $.get("deleteSkuInfo?skuId="+skuInfo.id,function (data) {
+                alert(data)
+            })
+            // 加载sku数据列表
+            $("#skulist_dg").datagrid({url:"getSkuListBySpu?spuId="+skuInfo.spuId});
+        }else{
+            alert("请选择需要删除的SKU");
+        }
+
+    }
+    
+    
     function initSkuListDatagrid(spuInfo) {
         // 加载sku数据列表
         $("#skulist_dg").datagrid({url:"getSkuListBySpu?spuId="+spuInfo.id});
+    }
+    
+    function editSkuInfo() {
+        var skuInfo = $("#skulist_dg").datagrid("getSelected");
+        if(skuInfo){
+            $("#sku_dlg").dialog("open");
+            initSkuInfoEdit(skuInfo)
+        }else{
+            alert("请选择需要编辑的SKU");
+        }
+
     }
 
 </script>

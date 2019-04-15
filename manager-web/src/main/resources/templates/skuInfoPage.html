@@ -80,6 +80,26 @@
         initSkuImgListDatagrid(spuInfo.id);
     }
 
+    function initSkuInfoEdit(skuInfo) {
+        // 初始化sku表单
+        $("#skuName").textbox("setValue",skuInfo.skuName);
+        $("#price").textbox("setValue",skuInfo.price);
+        $("#weight").textbox("setValue",skuInfo.weight);
+        $("#skuDesc").textbox("setValue",skuInfo.skuDesc);
+        $("#spuIdForSku").val(skuInfo.spuId);
+        $("#skuId").val(skuInfo.id);
+        $("#catalog3IdForSku").val(skuInfo.catalog3Id);
+        $("#skuInfo").val(skuInfo.skuInfo);
+
+        // 初始化平台属性
+        initAttrInfoGroup(skuInfo.catalog3Id);
+        // 初始化销售属性
+        initSpuSaleAttrGroup(skuInfo.spuId);
+        // 初始化图片列表
+        initSkuImgListDatagrid(skuInfo.spuId);
+    }
+
+
     function  initAttrInfoGroup(catalog3Id) {
         $.post("getAttrListByCtg3Id",{catalog3Id:catalog3Id},function(data){
             var append = "";

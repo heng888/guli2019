@@ -11,4 +11,9 @@ public interface SkuService {
 
     //新增skuInfo
     void saveSku(SkuInfo skuInfo);
+    //删除sku
+    void deleteSkuInfo(Long skuId);
+
+
+
 }
