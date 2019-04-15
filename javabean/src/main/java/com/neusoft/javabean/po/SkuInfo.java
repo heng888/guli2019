@@ -144,6 +144,7 @@ public class SkuInfo implements Serializable {
         this.price = price;
     }
 
+
     /**
      * 获取sku名称
      *
