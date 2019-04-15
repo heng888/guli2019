@@ -11,9 +11,10 @@ import com.neusoft.managerservice.dao.SkuImageMapper;
 import com.neusoft.managerservice.dao.SkuInfoMapper;
 import com.neusoft.managerservice.dao.SkuSaleAttrValueMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Transactional
 @Service
 public class SkuServiceImpl implements SkuService {
     @Autowired
@@ -61,17 +62,20 @@ public class SkuServiceImpl implements SkuService {
             skuAttrValue.setSkuId(skuInfoId);
             skuAttrValueMapper.insert(skuAttrValue);
         }
-        //插入SkuSaleAttrValue
-        List<SkuSaleAttrValue> skuSaleAttrValueList = skuInfo.getSkuSaleAttrValueList();
-        for (SkuSaleAttrValue skuSaleAttrValue : skuSaleAttrValueList) {
-            skuSaleAttrValue.setSkuId(skuInfoId);
-            skuSaleAttrValueMapper.insert(skuSaleAttrValue);
-        }
+
         //插入SkuImage
         List<SkuImage> skuImageList = skuInfo.getSkuImageList();
         for (SkuImage skuImage : skuImageList) {
             skuImage.setSkuId(skuInfoId);
             skuImageMapper.insert(skuImage);
         }
+
+        //插入SkuSaleAttrValue
+        List<SkuSaleAttrValue> skuSaleAttrValueList = skuInfo.getSkuSaleAttrValueList();
+        for (SkuSaleAttrValue skuSaleAttrValue : skuSaleAttrValueList) {
+            skuSaleAttrValue.setSkuId(skuInfoId);
+            skuSaleAttrValueMapper.insert(skuSaleAttrValue);
+        }
+
     }
 }

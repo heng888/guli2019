@@ -23,7 +23,7 @@ public class SkuInfo implements Serializable {
     /**
      * 价格
      */
-    private Long price;
+    private Double price;
 
     /**
      * sku名称
@@ -131,7 +131,7 @@ public class SkuInfo implements Serializable {
      *
      * @return price - 价格
      */
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -140,7 +140,7 @@ public class SkuInfo implements Serializable {
      *
      * @param price 价格
      */
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
