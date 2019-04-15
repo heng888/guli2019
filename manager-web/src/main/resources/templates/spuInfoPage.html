@@ -76,10 +76,16 @@
         function deleteImage() {
             //获取选中的行
             var row = $("#spuImgDg").datagrid("getSelected");
-            //获取选中行的索引
-            var index = $("#spuImgDg").datagrid("getRowIndex",row);
-            //根据索引删除行
-            $("#spuImgDg").datagrid("deleteRow",index);
+           if(row){
+               if(confirm("是否确定删除？")){
+                   //获取选中行的索引
+                   var index = $("#spuImgDg").datagrid("getRowIndex",row);
+                   //根据索引删除行
+                   $("#spuImgDg").datagrid("deleteRow",index);
+               }
+           }else{
+               alert("请选择需要删除的数据！");
+           }
         }
 
 
@@ -87,10 +93,16 @@
         function deleteSpuSaleAttr() {
             //获取选中的行
             var row = $("#spuSaleAttrDg").datagrid("getSelected");
-            //获取选中行的索引
-            var index = $("#spuSaleAttrDg").datagrid("getRowIndex",row);
-            //根据索引删除行
-            $("#spuSaleAttrDg").datagrid("deleteRow",index);
+            if(row){
+                if(confirm("是否确定删除？")){
+                    //获取选中行的索引
+                    var index = $("#spuSaleAttrDg").datagrid("getRowIndex",row);
+                    //根据索引删除行
+                    $("#spuSaleAttrDg").datagrid("deleteRow",index);
+                }
+            }else{
+                alert("请选择需要删除的数据！");
+            }
         }
 
 

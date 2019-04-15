@@ -103,10 +103,16 @@
         function removeSpuSaleAttrValue() {
             // 获取被选中的行
             var row = $("#spuSaleAttrValueDg").datagrid("getSelected");
-            // 获取行号
-            var index = $("#spuSaleAttrValueDg").datagrid("getRowIndex",row);
-            // 根据行号删除
-            $("#spuSaleAttrValueDg").datagrid("deleteRow",index);
+            if(row){
+                if(confirm("是否确定删除？")){
+                    // 获取行号
+                    var index = $("#spuSaleAttrValueDg").datagrid("getRowIndex",row);
+                    // 根据行号删除
+                    $("#spuSaleAttrValueDg").datagrid("deleteRow",index);
+                }
+            }else{
+                alert("请选择需要删除的数据");
+            }
         }
 
 

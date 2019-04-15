@@ -82,10 +82,17 @@
                 handler: function(){
                     // 获得选中的行对象
                     var dg_av = $("#dg_av").datagrid("getSelected");
-                    // 获得行号
-                    var rowNum = $("#dg_av").datagrid("getRowIndex",dg_av);
-                    // 根据行号删除
-                    $("#dg_av").datagrid("deleteRow",rowNum);
+                    if(dg_av){
+                        if(confirm("是否确定删除？")){
+                            // 获得行号
+                            var rowNum = $("#dg_av").datagrid("getRowIndex",dg_av);
+                            // 根据行号删除
+                            $("#dg_av").datagrid("deleteRow",rowNum);
+                        }
+                    }else{
+                        alert("请选择需要删除的对象！")
+                    }
+
                 }
             }],
             onDblClickRow: function (rowIndex, rowData) {

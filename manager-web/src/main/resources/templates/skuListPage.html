@@ -52,12 +52,14 @@
     function deleteSkuInfo() {
         var skuInfo = $("#skulist_dg").datagrid("getSelected");
         if(skuInfo){
-            //删除sku
-            $.get("deleteSkuInfo?skuId="+skuInfo.id,function (data) {
-                alert(data)
-            })
-            // 加载sku数据列表
-            $("#skulist_dg").datagrid({url:"getSkuListBySpu?spuId="+skuInfo.spuId});
+           if(confirm("是否确定删除？")){
+               //删除sku
+               $.get("deleteSkuInfo?skuId="+skuInfo.id,function (data) {
+                   alert(data)
+               })
+               // 加载sku数据列表
+               $("#skulist_dg").datagrid({url:"getSkuListBySpu?spuId="+skuInfo.spuId});
+           }
         }else{
             alert("请选择需要删除的SKU");
         }
@@ -66,7 +68,6 @@
     
     
     function initSkuListDatagrid(spuInfo) {
-        alert(spuInfo.id);
         // 加载sku数据列表
         $("#skulist_dg").datagrid({url:"getSkuListBySpu?spuId="+spuInfo.id});
         $("#spuIdForSkuList").val(spuInfo.id);
