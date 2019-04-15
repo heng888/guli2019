@@ -42,6 +42,13 @@
 
 <script language="JavaScript">
 
+
+
+    function reloadSkuList() {
+        // 加载sku数据列表
+        var spuInfoId = $("#spuIdForSkuList").val();
+        $("#skulist_dg").datagrid({url:"getSkuListBySpu?spuId="+spuInfoId});
+    }
     function deleteSkuInfo() {
         var skuInfo = $("#skulist_dg").datagrid("getSelected");
         if(skuInfo){
@@ -59,8 +66,10 @@
     
     
     function initSkuListDatagrid(spuInfo) {
+        alert(spuInfo.id);
         // 加载sku数据列表
         $("#skulist_dg").datagrid({url:"getSkuListBySpu?spuId="+spuInfo.id});
+        $("#spuIdForSkuList").val(spuInfo.id);
     }
     
     function editSkuInfo() {

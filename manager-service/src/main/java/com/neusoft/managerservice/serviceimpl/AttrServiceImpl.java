@@ -117,7 +117,11 @@ public class AttrServiceImpl implements AttrService {
         baseAttrInfoMapper.updateByPrimaryKey(baseAttrInfo);
         BaseAttrValue baseAttrValue = new BaseAttrValue();
         baseAttrValue.setAttrId(baseAttrInfo.getId());
-        baseAttrValueMapper.delete(baseAttrValue);
+        List<BaseAttrValue> baseAttrValues = baseAttrValueMapper.select(baseAttrValue);
+        for (BaseAttrValue attrValue : baseAttrValues) {
+            attrValue.setAttrValueStatus(0);
+            baseAttrValueMapper.updateByPrimaryKey(attrValue);
+        }
         List<BaseAttrValue> attrValueList = baseAttrInfo.getAttrValueList();
         for (BaseAttrValue attrValue : attrValueList) {
             attrValue.setAttrId(baseAttrInfo.getId());

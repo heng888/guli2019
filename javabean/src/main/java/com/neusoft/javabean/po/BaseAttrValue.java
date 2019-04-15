@@ -18,13 +18,18 @@ public class BaseAttrValue implements Serializable {
     @Column(name = "value_name")
     private String valueName;
 
-    @Override
-    public String toString() {
-        return "BaseAttrValue{" +
-                "id=" + id +
-                ", valueName='" + valueName + '\'' +
-                ", attrId=" + attrId +
-                '}';
+    /**
+     * 状态
+     */
+    @Column(name = "attr_value_status")
+    private int attrValueStatus;
+
+    public int getAttrValueStatus() {
+        return attrValueStatus;
+    }
+
+    public void setAttrValueStatus(int attrValueStatus) {
+        this.attrValueStatus = attrValueStatus;
     }
 
     /**
@@ -85,5 +90,15 @@ public class BaseAttrValue implements Serializable {
      */
     public void setAttrId(Long attrId) {
         this.attrId = attrId;
+    }
+
+    @Override
+    public String toString() {
+        return "BaseAttrValue{" +
+                "id=" + id +
+                ", valueName='" + valueName + '\'' +
+                ", attrValueStatus=" + attrValueStatus +
+                ", attrId=" + attrId +
+                '}';
     }
 }

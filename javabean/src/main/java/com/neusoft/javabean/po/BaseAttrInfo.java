@@ -21,6 +21,12 @@ public class BaseAttrInfo implements Serializable {
     private String attrName;
 
     /**
+     * 状态
+     */
+    @Column(name = "attr_status")
+    private String attrStatus;
+
+    /**
      * 三级分类id
      */
     @Column(name = "catalog3_id")
@@ -31,6 +37,14 @@ public class BaseAttrInfo implements Serializable {
      */
     @Column(name = "is_enabled")
     private String isEnabled;
+
+    public String getAttrStatus() {
+        return attrStatus;
+    }
+
+    public void setAttrStatus(String attrStatus) {
+        this.attrStatus = attrStatus;
+    }
 
     @Transient
     private List<BaseAttrValue> attrValueList;
@@ -58,9 +72,10 @@ public class BaseAttrInfo implements Serializable {
         return "BaseAttrInfo{" +
                 "id=" + id +
                 ", attrName='" + attrName + '\'' +
+                ", attrStatus='" + attrStatus + '\'' +
                 ", catalog3Id=" + catalog3Id +
                 ", isEnabled='" + isEnabled + '\'' +
-                ", baseAttrValueList=" + attrValueList +
+                ", attrValueList=" + attrValueList +
                 '}';
     }
 

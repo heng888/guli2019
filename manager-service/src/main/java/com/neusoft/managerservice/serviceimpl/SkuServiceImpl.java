@@ -104,4 +104,52 @@ public class SkuServiceImpl implements SkuService {
         skuInfoMapper.deleteByPrimaryKey(skuId);
     }
 
+    /**
+     * 修改SkuInfo
+     * @param skuInfo
+     */
+    @Override
+    public void updateSkuInfo(SkuInfo skuInfo) {
+        //修改SkuInfo
+        skuInfoMapper.updateByPrimaryKey(skuInfo);
+        Long skuInfoId = skuInfo.getId();
+        //先根据skuId删除SkuImage
+        SkuImage skuImage = new SkuImage();
+        skuImage.setSkuId(skuInfoId);
+        skuImageMapper.delete(skuImage);
+
+        //先根据skuId删除SkuAttrValue
+        SkuAttrValue skuAttrValue = new SkuAttrValue();
+        skuAttrValue.setSkuId(skuInfoId);
+        skuAttrValueMapper.delete(skuAttrValue);
+
+        //先根据skuId删除SkuSaleAttrValue
+        SkuSaleAttrValue skuSaleAttrValue = new SkuSaleAttrValue();
+        skuSaleAttrValue.setSkuId(skuInfoId);
+        skuSaleAttrValueMapper.delete(skuSaleAttrValue);
+
+
+        //插入SkuAttrValue
+        List<SkuAttrValue> skuAttrValueList = skuInfo.getSkuAttrValueList();
+        for (SkuAttrValue skuAttrValue1 : skuAttrValueList) {
+            skuAttrValue1.setSkuId(skuInfoId);
+            skuAttrValueMapper.insert(skuAttrValue1);
+        }
+
+        //插入SkuImage
+        List<SkuImage> skuImageList = skuInfo.getSkuImageList();
+        for (SkuImage skuImage1 : skuImageList) {
+            skuImage1.setSkuId(skuInfoId);
+            skuImageMapper.insert(skuImage1);
+        }
+
+        //插入SkuSaleAttrValue
+        List<SkuSaleAttrValue> skuSaleAttrValueList = skuInfo.getSkuSaleAttrValueList();
+        for (SkuSaleAttrValue skuSaleAttrValue1 : skuSaleAttrValueList) {
+            skuSaleAttrValue1.setSkuId(skuInfoId);
+            skuSaleAttrValueMapper.insert(skuSaleAttrValue1);
+        }
+    }
+
+
 }

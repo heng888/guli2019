@@ -109,10 +109,11 @@
                 attrName = attr.attrName;
                 var attrValueList = attr.attrValueList;
 
-                selectHead = "<select>";
+                selectHead = "<select id='"+attr.id+"'>";
                 options = "";
                 $(attrValueList).each(function(j,attrValue){
                     options = options + "<option value='"+attrValue.id+"'>"+attrValue.valueName+"</option>";
+                    //("#sel").find("option:contains('"+1+"')").prop("selected",true);
                 });
                 selectEnd= "</select>";
                 spanEnd = "</span>";
@@ -180,7 +181,7 @@
         skuInfo["catalog3Id"] = $("#ctg3ForSpuList").combobox("getValue");
         skuInfo["skuDesc"] =$("#skuDesc").textbox("getValue");
         skuInfo["weight"] =$("#weight").numberbox("getValue");
-
+        skuInfo["id"] = $("#skuId").val();
         skuInfo["skuName"] =$("#skuName").textbox("getValue");
         skuInfo["price"]=$("#price").textbox("getValue");
 
@@ -236,6 +237,9 @@
 
         //关闭对话框
         $("#sku_dlg").dialog("close");
+
+        var spuInfoId = $("#spuIdForSkuList").val();
+        $("#skulist_dg").datagrid({url:"getSkuListBySpu?spuId="+spuInfoId});
     }
     
 </script>

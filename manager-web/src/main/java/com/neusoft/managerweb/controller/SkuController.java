@@ -32,8 +32,13 @@ public class SkuController {
     @RequestMapping("saveSku")
     @ResponseBody
     public String saveSku(SkuInfo skuInfo){
-        skuService.saveSku(skuInfo);
-        return "新增成功";
+        if(skuInfo.getId() ==null ){
+            skuService.saveSku(skuInfo);
+            return "新增成功";
+        }else{
+            skuService.updateSkuInfo(skuInfo);
+            return "修改成功";
+        }
     }
 
     /**
