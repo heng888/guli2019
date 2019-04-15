@@ -172,6 +172,7 @@ public class SkuInfo implements Serializable {
         return skuDesc;
     }
 
+
     /**
      * 设置商品规格描述
      *
