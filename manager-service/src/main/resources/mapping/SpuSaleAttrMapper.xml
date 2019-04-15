@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.managerservice.dao.SpuSaleAttrMapper" >
+  <resultMap id="BaseResultMap" type="SpuSaleAttr" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="attrid" property="id" jdbcType="BIGINT" />
+    <result column="spu_id" property="spuId" jdbcType="BIGINT" />
+    <result column="sale_attr_id" property="saleAttrId" jdbcType="BIGINT" />
+    <result column="sale_attr_name" property="saleAttrName" jdbcType="VARCHAR" />
+    <collection property="spuSaleAttrValueList" ofType="SpuSaleAttrValue">
+      <id column="valueid" property="id" jdbcType="BIGINT" />
+      <result column="spu_id" property="spuId" jdbcType="BIGINT" />
+      <result column="sale_attr_id" property="saleAttrId" jdbcType="BIGINT" />
+      <result column="sale_attr_value_name" property="saleAttrValueName" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, spu_id, sale_attr_id, sale_attr_name
+  </sql>
+  <select id="selectSaleAttrAndAttrValueByspuId" resultMap="BaseResultMap">
+    select a.id attrid,a.spu_id,a.sale_attr_id,a.sale_attr_name,v.id valueid,v.spu_id,v.sale_attr_id,v.sale_attr_value_name from spu_sale_attr a
+    join spu_sale_attr_value v
+    on a.spu_id=v.spu_id
+    and a.sale_attr_id=v.sale_attr_id
+    where  a.spu_id=#{spuId}
+  </select>
+</mapper>

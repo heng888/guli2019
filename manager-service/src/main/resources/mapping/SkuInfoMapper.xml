@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.managerservice.dao.SkuInfoMapper" >
+  <resultMap id="BaseResultMap" type="SkuInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="spu_id" property="spuId" jdbcType="BIGINT" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="sku_name" property="skuName" jdbcType="VARCHAR" />
+    <result column="sku_desc" property="skuDesc" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DECIMAL" />
+    <result column="tm_id" property="tmId" jdbcType="BIGINT" />
+    <result column="catalog3_id" property="catalog3Id" jdbcType="BIGINT" />
+    <result column="sku_default_img" property="skuDefaultImg" jdbcType="VARCHAR" />
+    <collection property="skuImageList" ofType="SkuImage">
+      <id column="imageId" property="id" jdbcType="BIGINT" />
+      <result column="sku_id" property="skuId" jdbcType="BIGINT" />
+      <result column="img_name" property="imgName" jdbcType="VARCHAR" />
+      <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+      <result column="spu_img_id" property="spuImgId" jdbcType="BIGINT" />
+      <result column="is_default" property="isDefault" jdbcType="VARCHAR" />
+    </collection>
+    <collection property="skuAttrValueList" ofType="SkuAttrValue">
+      <id column="attrValueId" property="id" jdbcType="BIGINT" />
+      <result column="attr_id" property="attrId" jdbcType="BIGINT" />
+      <result column="value_id" property="valueId" jdbcType="BIGINT" />
+      <result column="sku_id" property="skuId" jdbcType="BIGINT" />
+    </collection>
+    <collection property="skuSaleAttrValueList" ofType="SkuSaleAttrValue">
+      <id column="saleAttrValueId" property="id" jdbcType="BIGINT" />
+      <result column="sku_id" property="skuId" jdbcType="BIGINT" />
+      <result column="sale_attr_id" property="saleAttrId" jdbcType="BIGINT" />
+      <result column="sale_attr_value_id" property="saleAttrValueId" jdbcType="BIGINT" />
+      <result column="sale_attr_name" property="saleAttrName" jdbcType="VARCHAR" />
+      <result column="sale_attr_value_name" property="saleAttrValueName" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, spu_id, price, sku_name, sku_desc, weight, tm_id, catalog3_id, sku_default_img
+  </sql>
+
+  <select id="selectSkuInfoBySpuId" resultMap="BaseResultMap">
+    select * from sku_info i
+    join sku_image m
+    on i.id=m.sku_id
+    join sku_attr_value v
+    on i.id = v.sku_id
+    join sku_sale_attr_value ssav on i.id = ssav.sku_id
+    where i.spu_id=#{spuId}
+  </select>
+</mapper>
