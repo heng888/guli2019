@@ -173,6 +173,8 @@ public class SkuInfo implements Serializable {
     }
 
 
+
+
     /**
      * 设置商品规格描述
      *
