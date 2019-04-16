@@ -14,6 +14,7 @@
       <result column="spu_id" property="spuId" jdbcType="BIGINT" />
       <result column="sale_attr_id" property="saleAttrId" jdbcType="BIGINT" />
       <result column="sale_attr_value_name" property="saleAttrValueName" jdbcType="VARCHAR" />
+      <result column="isChecked" property="isChecked" jdbcType="VARCHAR" />
     </collection>
   </resultMap>
   <sql id="Base_Column_List" >
@@ -28,5 +29,20 @@
     on a.spu_id=v.spu_id
     and a.sale_attr_id=v.sale_attr_id
     where  a.spu_id=#{spuId}
+  </select>
+
+  <select id="spuSaleAttrListCheckBySku" resultMap="BaseResultMap">
+    select ssa.id as attrid,ssa.sale_attr_id,ssa.sale_attr_name,ssav.id as valueid,
+           ssav.sale_attr_value_name,ssav2.sale_attr_value_id,
+           if(ssav2.sale_attr_value_id is not null,1,0) as isChecked
+    from spu_sale_attr ssa
+    join spu_sale_attr_value ssav
+    on ssa.sale_attr_id=ssav.sale_attr_id
+    and ssa.spu_id=ssav.spu_id
+    and ssa.spu_id=#{spuId}
+    left join sku_sale_attr_value ssav2
+    on ssa.sale_attr_id=ssav2.sale_attr_id
+    and ssav2.sale_attr_value_id=ssav.id
+    and ssav2.sku_id=#{skuId}
   </select>
 </mapper>

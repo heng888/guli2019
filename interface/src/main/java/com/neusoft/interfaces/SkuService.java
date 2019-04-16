@@ -18,4 +18,7 @@ public interface SkuService {
 
     //修改skuInfo
     void updateSkuInfo(SkuInfo skuInfo);
+
+    //根据skuId查询SkuInfo信息
+    SkuInfo getSkuInfoBySkuId(Long skuId);
 }

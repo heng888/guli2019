@@ -30,7 +30,16 @@ public class SpuSaleAttrValue implements Serializable {
     @Column(name = "sale_attr_value_name")
     private String saleAttrValueName;
 
+    @Transient
+    private String isChecked;
 
+    public String getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(String isChecked) {
+        this.isChecked = isChecked;
+    }
 
     /**
      * 获取销售属性值编号
@@ -111,6 +120,7 @@ public class SpuSaleAttrValue implements Serializable {
                 ", spuId=" + spuId +
                 ", saleAttrId=" + saleAttrId +
                 ", saleAttrValueName='" + saleAttrValueName + '\'' +
+                ", isChecked='" + isChecked + '\'' +
                 '}';
     }
 }

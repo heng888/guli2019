@@ -3,6 +3,7 @@ package com.neusoft.interfaces;
 import com.neusoft.javabean.po.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SpuService {
     //通过三级分类查询所有的销售属性
@@ -35,4 +36,7 @@ public interface SpuService {
     //根据spuId查询spu相关的Attr  AttrValue
     List<SpuSaleAttr> selectSpuAll(Long spuId);
 
+
+    //根据spuId和skuId查询查询SpuSaleAttr跟SpuSaleAttrValue
+    List<SpuSaleAttr> spuSaleAttrListCheckBySku(Map map);
 }

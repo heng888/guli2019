@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    欢迎你
+    <div th:text="${hello}"></div>
+    <div>
+        <table style="border:1px solid red;font-size: 20px;color: red">
+            <th>姓名</th><th>电话</th>
+            <tr th:each="user:${users}">
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.passwd}"></td>
+            </tr>
+        </table>
+    </div>
+    <div th:if="${hello=='Hello'}">哈哈哈</div>
+</body>
+</html>

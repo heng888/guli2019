@@ -40,6 +40,7 @@ public class SkuServiceImpl implements SkuService {
         return skuInfos;
     }
 
+
     /**
      * 查询SkuInfo及相关的SkuImage、SkuAttrValue、SkuSaleAttrValue
      */
@@ -149,6 +150,22 @@ public class SkuServiceImpl implements SkuService {
             skuSaleAttrValue1.setSkuId(skuInfoId);
             skuSaleAttrValueMapper.insert(skuSaleAttrValue1);
         }
+    }
+
+
+    //根据skuId查询skuInfo相关的spuImage、spuAttrValue、spuSaleAttrValue
+    @Override
+    public SkuInfo getSkuInfoBySkuId(Long skuId) {
+        //查询skuInfo
+        SkuInfo skuInfo = new SkuInfo();
+        skuInfo.setId(skuId);
+        SkuInfo skuInfo1 = skuInfoMapper.selectOne(skuInfo);
+        //查询skuImage并存入skuInfo
+        SkuImage skuImage = new SkuImage();
+        skuImage.setSkuId(skuId);
+        List<SkuImage> skuImages = skuImageMapper.select(skuImage);
+        skuInfo1.setSkuImageList(skuImages);
+        return skuInfo1;
     }
 
 

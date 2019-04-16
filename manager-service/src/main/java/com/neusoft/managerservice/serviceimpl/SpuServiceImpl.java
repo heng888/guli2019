@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -178,8 +179,20 @@ public class SpuServiceImpl implements SpuService {
         }
     }
 
+    //无用
     @Override
     public List<SpuSaleAttr> selectSpuAll(Long spuId) {
         return spuSaleAttrMapper.selectSaleAttrAndAttrValueByspuId(spuId);
+    }
+
+
+    /**
+     * 根据spuId和skuId查询SpuSaleAttr
+     * @param map
+     * @return
+     */
+    @Override
+    public List<SpuSaleAttr> spuSaleAttrListCheckBySku(Map map) {
+        return spuSaleAttrMapper.spuSaleAttrListCheckBySku(map);
     }
 }
