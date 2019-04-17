@@ -21,4 +21,8 @@ public interface SkuService {
 
     //根据skuId查询SkuInfo信息
     SkuInfo getSkuInfoBySkuId(Long skuId);
+
+
+    //根据spuId查询相关的所有skuInfo
+    List<SkuInfo> selectSkuSaleAttrValueListBySpuId(Long spuId);
 }

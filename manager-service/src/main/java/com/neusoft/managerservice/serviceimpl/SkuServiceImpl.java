@@ -1,6 +1,7 @@
 package com.neusoft.managerservice.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSON;
 import com.neusoft.interfaces.SkuService;
 import com.neusoft.javabean.po.SkuAttrValue;
 import com.neusoft.javabean.po.SkuImage;
@@ -10,8 +11,10 @@ import com.neusoft.managerservice.dao.SkuAttrValueMapper;
 import com.neusoft.managerservice.dao.SkuImageMapper;
 import com.neusoft.managerservice.dao.SkuInfoMapper;
 import com.neusoft.managerservice.dao.SkuSaleAttrValueMapper;
+import com.neusoft.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.Jedis;
 
 import java.util.List;
 @Transactional
@@ -25,7 +28,8 @@ public class SkuServiceImpl implements SkuService {
     SkuAttrValueMapper skuAttrValueMapper;
     @Autowired
     SkuSaleAttrValueMapper skuSaleAttrValueMapper;
-
+    @Autowired
+    RedisUtil redisUtil;
 
     /**
      * 查询skuInfo信息
@@ -153,9 +157,28 @@ public class SkuServiceImpl implements SkuService {
     }
 
 
-    //根据skuId查询skuInfo相关的spuImage、spuAttrValue、spuSaleAttrValue
+    //先在redis中查询，如果没有再调数据库查询
     @Override
     public SkuInfo getSkuInfoBySkuId(Long skuId) {
+        SkuInfo skuInfo = null;
+        //查询redis缓存
+        Jedis jedis = redisUtil.getJedis();
+        String key = "sku:"+skuId+":info";
+        String val =jedis.get(key);
+        skuInfo = JSON.parseObject(val, SkuInfo.class);
+
+        //判断redis是否有查询到
+        if(skuInfo == null){
+            //查询DB
+            skuInfo = getSkuInfoBySkuIdFormDB(skuId);
+            //同步缓存
+            jedis.set(key,JSON.toJSONString(skuInfo));
+        }
+        return skuInfo;
+    }
+
+    //在数据库中根据skuId查询skuInfo相关的spuImage、spuAttrValue、spuSaleAttrValue
+    private SkuInfo getSkuInfoBySkuIdFormDB(Long skuId) {
         //查询skuInfo
         SkuInfo skuInfo = new SkuInfo();
         skuInfo.setId(skuId);
@@ -166,6 +189,11 @@ public class SkuServiceImpl implements SkuService {
         List<SkuImage> skuImages = skuImageMapper.select(skuImage);
         skuInfo1.setSkuImageList(skuImages);
         return skuInfo1;
+    }
+
+    @Override
+    public List<SkuInfo> selectSkuSaleAttrValueListBySpuId(Long spuId) {
+        return skuInfoMapper.selectSkuSaleAttrValueListBySpuId(spuId);
     }
 
 

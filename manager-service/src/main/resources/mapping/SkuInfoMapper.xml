@@ -53,4 +53,23 @@
     join sku_sale_attr_value ssav on i.id = ssav.sku_id
     where i.spu_id=#{spuId}
   </select>
+
+  <resultMap id="selectSkuSaleAttrValueListBySpuIdMap" type="SkuInfo" autoMapping="true">
+    <id column="id" property="id"  />
+    <collection ofType="SkuSaleAttrValue" property="skuSaleAttrValueList" autoMapping="true">
+      <id column="ssavId" property="id" />
+      <result column="sku_id" property="skuId" jdbcType="BIGINT" />
+      <result column="sale_attr_id" property="saleAttrId" jdbcType="BIGINT" />
+      <result column="sale_attr_value_id" property="saleAttrValueId" jdbcType="BIGINT" />
+      <result column="sale_attr_name" property="saleAttrName" jdbcType="VARCHAR" />
+      <result column="sale_attr_value_name" property="saleAttrValueName" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+
+  <select id="selectSkuSaleAttrValueListBySpuId" resultMap="selectSkuSaleAttrValueListBySpuIdMap">
+      select s.id,ssav.id as ssavId,ssav.sale_attr_value_id
+      from sku_info s,sku_sale_attr_value ssav
+      where s.id=ssav.sku_id
+      and s.spu_id=#{spuId}
+  </select>
 </mapper>

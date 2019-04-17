@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css"/>
 	</head>
 	<body>
-	<input id="skuJson" type="text" th:value="${skuJson}"/>
+	<input id="skuJson" type="hidden" th:value="${skuJson}"/>
 		<div id="max">
 		<header>
 
@@ -295,9 +295,9 @@
 			</div>
 			 
 
-			<div class="ShopXiangqing">
+			<!--<div class="ShopXiangqing">
 				<div class="allLeft">
-					<!--火热预约-->
+					&lt;!&ndash;火热预约&ndash;&gt;
 					<div class="huoreyuyue">
 						<h3>火热预约</h3>
 					</div>
@@ -333,7 +333,7 @@
 							</li>
 						</ul>
 					</div>
-					<!--看了又看-->
+					&lt;!&ndash;看了又看&ndash;&gt;
 					<div class="huoreyuyue">
 						<h3>看了又看</h3>
 					</div>
@@ -353,7 +353,7 @@
 								<p><strong class="J-p-3749093">￥4899.00</strong></p>
 							</li>
 							<li>
-								<!--shopjieshao-->
+								&lt;!&ndash;shopjieshao&ndash;&gt;
 								<a href="##"><img src="/img/59eb0df9Nd66d7585.jpg" /></a>
 								<p>
 									<a target="_blank" title="华为（HUAWEI） 华为 Mate10 手机 亮黑色 全网通(4+64G)标准版" href="/item.html.bak/item.jd.com/12306211773.html">华为（HUAWEI） 华为 Mate10 手机 亮黑色 全网通(4+64G)标准版</a>
@@ -371,8 +371,8 @@
 						<img src="/img/5a084a1aNa1aa0a71.jpg" />
 					</div>
 				</div>
-				<!--商品介绍-->
-				<div class="allquanbushop">
+				&lt;!&ndash;商品介绍&ndash;&gt;
+				&lt;!&ndash;<div class="allquanbushop">
 					<ul class="shopjieshao">
 						<li class="jieshoa" style="background: #e4393c;">
 							<a href="##" style="color: white;">商品介绍</a>
@@ -410,8 +410,8 @@
 						</li>
 					</ul>
 
-					<!--商品详情-->
-					<div class="huawei">
+					&lt;!&ndash;商品详情&ndash;&gt;
+					&lt;!&ndash;<div class="huawei">
 						<ul class="xuanxiangka">
 							<li class="jieshoa actives" id="li1">
 								<div class="shanpinsssss">
@@ -601,7 +601,7 @@
 												<dd>支持</dd>
 											</dl>
 										</div>
-									<!--nav-->
+									&lt;!&ndash;nav&ndash;&gt;
 										<div class="guiGe">
 											<h3>后置摄像头</h3>
 											<dl>
@@ -966,7 +966,7 @@
 									</div>
 								</div>
 							</li>
-							<!--包装-->
+							&lt;!&ndash;包装&ndash;&gt;
 							<li class="baozhang actives" id="li3">
 								<div class="oBox">
 		<div class="shuoHou">
@@ -974,7 +974,7 @@
 				<h2>售后保障</h2>
 			</div>
 		</div>
-		<!--厂家服务-->
+		&lt;!&ndash;厂家服务&ndash;&gt;
 		 
 			<div class="lianBao">
 	 
@@ -985,13 +985,13 @@
 
 
 							</li>
-							<!--评价-->
+							&lt;!&ndash;评价&ndash;&gt;
 							<li class="PINgjia actives" id="li4">
 								 
 						</ul>
-					</div>
-				</div>
-			</div>
+					</div>&ndash;&gt;
+				</div>&ndash;&gt;
+			</div>-->
 		</div>
 
 
@@ -1043,7 +1043,10 @@
                 window.location.href = "/"+skuId+".html";
 			}else{
 				$("#cartBtn").attr("class","box-btns-two-off");
-                $("#cartBtn").disable();
+                $("#cartBtn").removeAttr("onclick");
+                //$("#cartBtn").off("onclick");
+                //$("#cartBtn").unbind('click')
+                //$("#cartBtn").disable();
 			}
         }
 	</script>

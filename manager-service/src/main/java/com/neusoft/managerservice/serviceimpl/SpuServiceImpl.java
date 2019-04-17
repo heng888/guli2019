@@ -195,4 +195,5 @@ public class SpuServiceImpl implements SpuService {
     public List<SpuSaleAttr> spuSaleAttrListCheckBySku(Map map) {
         return spuSaleAttrMapper.spuSaleAttrListCheckBySku(map);
     }
+
 }

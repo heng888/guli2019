@@ -15,7 +15,6 @@
       <result column="spu_id" property="spuId" jdbcType="BIGINT" />
       <result column="sale_attr_id" property="saleAttrId" jdbcType="BIGINT" />
       <result column="sale_attr_name" property="saleAttrName" jdbcType="VARCHAR" />
-
       <collection property="spuSaleAttrValueList" ofType="SpuSaleAttrValue">
         <id column="valueid" property="id" jdbcType="BIGINT" />
         <result column="spu_id" property="spuId" jdbcType="BIGINT" />
