@@ -3,6 +3,7 @@ package com.neusoft.interfaces;
 import com.neusoft.javabean.po.*;
 
 import java.util.List;
+import java.util.Set;
 
 public interface AttrService {
     // 查询一级分类的所有信息
@@ -28,4 +29,11 @@ public interface AttrService {
 
     //通过三级分类的id查询三属性表及属性值
     List<BaseAttrInfo> selectAttrInfoAndValueByCatalog3(Long catalog3Id);
+
+    //查询所有的分类的集合的JSON对象
+    List<BaseCatalog1> selectAllCatalog();
+
+    //根据valueIds查询BaseAttrInfo
+    List<BaseAttrInfo> getAttrListByValueId(Set<String> valueIds);
+
 }

@@ -9,7 +9,6 @@ import com.neusoft.javabean.po.SkuSaleAttrValue;
 import com.neusoft.javabean.po.SpuSaleAttr;
 import com.neusoft.javabean.po.UserInfo;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,35 +34,37 @@ public class ItemController {
      */
     @RequestMapping("{skuId}.html")
     public String item(@PathVariable("skuId") Long skuId, ModelMap map){
-        //查询SkuInfo
-        SkuInfo skuInfo = skuService.getSkuInfoBySkuId(skuId);
-        map.put("skuInfo",skuInfo);
-        Long spuId = skuInfo.getSpuId();
-        /*List<SpuSaleAttr> spuSaleAttrs = spuService.selectSaleAttrAndAttrValueByspuId(spuId);
-        map.put("spuSaleAttrListCheckBySku",spuSaleAttrs);*/
-        //查询SpuSaleAttr
-        Map<String, Long> stringStringHashMap = new HashMap<>();
-        stringStringHashMap.put("skuId",skuId);
-        stringStringHashMap.put("spuId",spuId);
-        List<SpuSaleAttr> spuSaleAttrs = spuService.spuSaleAttrListCheckBySku(stringStringHashMap);
-        map.put("spuSaleAttrListCheckBySku",spuSaleAttrs);
+            //查询SkuInfo
+            SkuInfo skuInfo = skuService.getSkuInfoBySkuId(skuId);
+            if(skuInfo!=null){
+                map.put("skuInfo",skuInfo);
+                Long spuId = skuInfo.getSpuId();
+                //查询SpuSaleAttr
+                Map<String, Long> stringStringHashMap = new HashMap<>();
+                stringStringHashMap.put("skuId",skuId);
+                stringStringHashMap.put("spuId",spuId);
+                List<SpuSaleAttr> spuSaleAttrs = spuService.spuSaleAttrListCheckBySku(stringStringHashMap);
+                map.put("spuSaleAttrListCheckBySku",spuSaleAttrs);
 
-        //根据spuId查询相关的SkuInfo集合
-        List<SkuInfo> skuInfos = skuService.selectSkuSaleAttrValueListBySpuId(spuId);
-        HashMap<String, Long> hashMap = new HashMap<>();
-        //将skuInfo的skuId当做map的值，skuSaleAttrValue的组合当做键放入map
-        for (SkuInfo info : skuInfos) {
-            String k="";
-            List<SkuSaleAttrValue> skuSaleAttrValueList = info.getSkuSaleAttrValueList();
-            for (SkuSaleAttrValue saleAttrValue : skuSaleAttrValueList) {
-                k=k+"|"+saleAttrValue.getSaleAttrValueId();
+                //根据spuId查询相关的SkuInfo集合
+                List<SkuInfo> skuInfos = skuService.selectSkuSaleAttrValueListBySpuId(spuId);
+                HashMap<String, Long> hashMap = new HashMap<>();
+                //将skuInfo的skuId当做map的值，skuSaleAttrValue的组合当做键放入map
+                for (SkuInfo info : skuInfos) {
+                    String k="";
+                    List<SkuSaleAttrValue> skuSaleAttrValueList = info.getSkuSaleAttrValueList();
+                    for (SkuSaleAttrValue saleAttrValue : skuSaleAttrValueList) {
+                        k=k+"|"+saleAttrValue.getSaleAttrValueId();
+                    }
+                    hashMap.put(k,info.getId());
+                }
+                //将hashMap对象转换为json对象
+                String skuJson = JSON.toJSONString(hashMap);
+                map.put("skuJson",skuJson);
+                return "item";
+            }else{
+                return "redirect:http://localhost:8089/index";
             }
-            hashMap.put(k,info.getId());
-        }
-        //将hashMap对象转换为json对象
-        String skuJson = JSON.toJSONString(hashMap);
-        map.put("skuJson",skuJson);
-        return "item";
     }
 
 

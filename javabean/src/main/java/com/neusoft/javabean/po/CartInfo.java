@@ -4,174 +4,105 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Table(name = "cart_info")
+/**
+ * @param
+ * @return
+ */
 public class CartInfo implements Serializable {
-    /**
-     * 编号
-     */
-    @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Id
+    @Column
+    String id;
+    @Column
+    String userId;
+    @Column
+    String skuId;
+    @Column
+    BigDecimal cartPrice;
+    @Column
+    Integer skuNum;
+    @Column
+    String imgUrl;
+    @Column
+    String skuName;
 
-    /**
-     * 用户id
-     */
-    @Column(name = "user_id")
-    private Long userId;
+    @Column
+    BigDecimal skuPrice;
 
-    /**
-     * skuid
-     */
-    @Column(name = "sku_id")
-    private Long skuId;
+    @Column
+    String isChecked;
 
-    /**
-     * 放入购物车时价格
-     */
-    @Column(name = "cart_price")
-    private BigDecimal cartPrice;
-
-    /**
-     * 数量
-     */
-    @Column(name = "sku_num")
-    private Integer skuNum;
-
-    /**
-     * 图片文件
-     */
-    @Column(name = "img_url")
-    private String imgUrl;
-
-    /**
-     * sku名称 (冗余)
-     */
-    @Column(name = "sku_name")
-    private String skuName;
-
-    /**
-     * 获取编号
-     *
-     * @return id - 编号
-     */
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    /**
-     * 设置编号
-     *
-     * @param id 编号
-     */
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    /**
-     * 获取用户id
-     *
-     * @return user_id - 用户id
-     */
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    /**
-     * 设置用户id
-     *
-     * @param userId 用户id
-     */
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    /**
-     * 获取skuid
-     *
-     * @return sku_id - skuid
-     */
-    public Long getSkuId() {
+    public String getSkuId() {
         return skuId;
     }
 
-    /**
-     * 设置skuid
-     *
-     * @param skuId skuid
-     */
-    public void setSkuId(Long skuId) {
+    public void setSkuId(String skuId) {
         this.skuId = skuId;
     }
 
-    /**
-     * 获取放入购物车时价格
-     *
-     * @return cart_price - 放入购物车时价格
-     */
     public BigDecimal getCartPrice() {
         return cartPrice;
     }
 
-    /**
-     * 设置放入购物车时价格
-     *
-     * @param cartPrice 放入购物车时价格
-     */
     public void setCartPrice(BigDecimal cartPrice) {
         this.cartPrice = cartPrice;
     }
 
-    /**
-     * 获取数量
-     *
-     * @return sku_num - 数量
-     */
     public Integer getSkuNum() {
         return skuNum;
     }
 
-    /**
-     * 设置数量
-     *
-     * @param skuNum 数量
-     */
     public void setSkuNum(Integer skuNum) {
         this.skuNum = skuNum;
     }
 
-    /**
-     * 获取图片文件
-     *
-     * @return img_url - 图片文件
-     */
     public String getImgUrl() {
         return imgUrl;
     }
 
-    /**
-     * 设置图片文件
-     *
-     * @param imgUrl 图片文件
-     */
     public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl == null ? null : imgUrl.trim();
+        this.imgUrl = imgUrl;
     }
 
-    /**
-     * 获取sku名称 (冗余)
-     *
-     * @return sku_name - sku名称 (冗余)
-     */
     public String getSkuName() {
         return skuName;
     }
 
-    /**
-     * 设置sku名称 (冗余)
-     *
-     * @param skuName sku名称 (冗余)
-     */
     public void setSkuName(String skuName) {
-        this.skuName = skuName == null ? null : skuName.trim();
+        this.skuName = skuName;
+    }
+
+    public BigDecimal getSkuPrice() {
+        return skuPrice;
+    }
+
+    public void setSkuPrice(BigDecimal skuPrice) {
+        this.skuPrice = skuPrice;
+    }
+
+    public String getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(String isChecked) {
+        this.isChecked = isChecked;
     }
 }
+

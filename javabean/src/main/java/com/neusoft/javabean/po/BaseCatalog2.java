@@ -2,6 +2,7 @@ package com.neusoft.javabean.po;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Table(name = "base_catalog2")
 public class BaseCatalog2 implements Serializable {
@@ -22,6 +23,17 @@ public class BaseCatalog2 implements Serializable {
      */
     @Column(name = "catalog1_id")
     private Long catalog1Id;
+
+    @Transient
+    private List<BaseCatalog3> catalog3List;
+
+    public List<BaseCatalog3> getCatalog3List() {
+        return catalog3List;
+    }
+
+    public void setCatalog3List(List<BaseCatalog3> catalog3List) {
+        this.catalog3List = catalog3List;
+    }
 
     public BaseCatalog2() {
     }

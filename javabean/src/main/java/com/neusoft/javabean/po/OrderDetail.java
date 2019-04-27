@@ -2,6 +2,7 @@ package com.neusoft.javabean.po;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Table(name = "order_detail")
 public class OrderDetail implements Serializable {
@@ -22,7 +23,7 @@ public class OrderDetail implements Serializable {
      * sku_id
      */
     @Column(name = "sku_id")
-    private Long skuId;
+    private String skuId;
 
     /**
      * sku名称（冗余)
@@ -40,7 +41,7 @@ public class OrderDetail implements Serializable {
      * 购买价格(下单时sku价格）
      */
     @Column(name = "order_price")
-    private Long orderPrice;
+    private BigDecimal orderPrice;
 
     /**
      * 购买个数
@@ -89,7 +90,7 @@ public class OrderDetail implements Serializable {
      *
      * @return sku_id - sku_id
      */
-    public Long getSkuId() {
+    public String getSkuId() {
         return skuId;
     }
 
@@ -98,7 +99,7 @@ public class OrderDetail implements Serializable {
      *
      * @param skuId sku_id
      */
-    public void setSkuId(Long skuId) {
+    public void setSkuId(String skuId) {
         this.skuId = skuId;
     }
 
@@ -143,7 +144,7 @@ public class OrderDetail implements Serializable {
      *
      * @return order_price - 购买价格(下单时sku价格）
      */
-    public Long getOrderPrice() {
+    public BigDecimal getOrderPrice() {
         return orderPrice;
     }
 
@@ -152,7 +153,7 @@ public class OrderDetail implements Serializable {
      *
      * @param orderPrice 购买价格(下单时sku价格）
      */
-    public void setOrderPrice(Long orderPrice) {
+    public void setOrderPrice(BigDecimal orderPrice) {
         this.orderPrice = orderPrice;
     }
 

@@ -25,4 +25,10 @@ public interface SkuService {
 
     //根据spuId查询相关的所有skuInfo
     List<SkuInfo> selectSkuSaleAttrValueListBySpuId(Long spuId);
+
+    //通过三级分类id查询SkuInfo
+    List<SkuInfo> getSkuListByCatalog3Id(Long catalog3Id);
+
+    //通过键盘输入模糊查询SkuInfo
+    List<SkuInfo> getSkuListBykeyWord(String keyword);
 }

@@ -23,7 +23,7 @@ public class SkuInfo implements Serializable {
     /**
      * 价格
      */
-    private Double price;
+    private BigDecimal price;
 
     /**
      * sku名称
@@ -131,7 +131,7 @@ public class SkuInfo implements Serializable {
      *
      * @return price - 价格
      */
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -140,7 +140,7 @@ public class SkuInfo implements Serializable {
      *
      * @param price 价格
      */
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

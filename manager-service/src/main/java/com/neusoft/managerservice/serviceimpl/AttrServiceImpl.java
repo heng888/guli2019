@@ -1,13 +1,16 @@
 package com.neusoft.managerservice.serviceimpl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.alibaba.fastjson.JSONObject;
 import com.neusoft.interfaces.AttrService;
 import com.neusoft.javabean.po.*;
 import com.neusoft.managerservice.dao.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -125,6 +128,12 @@ public class AttrServiceImpl implements AttrService {
         }
     }
 
+
+    /**
+     * 通过三级分类id查询属性跟属性值
+     * @param catalog3Id
+     * @return
+     */
     @Override
     public List<BaseAttrInfo> selectAttrInfoAndValueByCatalog3(Long catalog3Id) {
         BaseAttrInfo baseAttrInfo = new BaseAttrInfo();
@@ -137,5 +146,22 @@ public class AttrServiceImpl implements AttrService {
             attrInfo.setAttrValueList(baseAttrValues);
         }
         return baseAttrInfos;
+    }
+
+    /**
+     * 查询所有的分类的集合的JSON对象
+     */
+    @Override
+    public List<BaseCatalog1> selectAllCatalog(){
+        return baseCatalog1Mapper.selectAllCatalog();
+    }
+
+
+    //根据valueIds查询BaseAttrInfo
+    @Override
+    public List<BaseAttrInfo> getAttrListByValueId(Set<String> valueIds) {
+        String s = StringUtils.join(valueIds,",");
+        List<BaseAttrInfo> baseAttrInfoList = baseAttrInfoMapper.getAttrListByValueId(s);
+        return baseAttrInfoList;
     }
 }

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="icon" href="/img/心04.png" type="/image/x-icon"/>
+    <link rel="stylesheet" href="/css/One_bdyStyle.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="/js/jquery-3.1.1.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/One_mainFoot.css">
+    <link rel="stylesheet" href="/css/font-awesome-4.7.0/css/font-awesome.css" />
+</head>
+<body>
+    <div class="One_ShopTop">
+    <ul>
+        <li><input type="checkbox" class="allCheck" onclick="aa()">全选</li>
+        <li>商品</li>
+        <li>单价</li>
+        <li>数量</li>
+        <li>小计</li>
+        <li>操作</li>
+    </ul>
+    </div>
+    <div class="One_ShopCon">
+        <ul>
+            <li  th:each="cartInfo:${cartList}">
+                <div> </div>
+
+                <div >
+                    <ol>
+                        <li><input type="checkbox"   class="check"  th:value="${cartInfo.skuId}"  onchange="checkSku(this)" th:checked="(${cartInfo.isChecked}=='1')?'true':'false'" /></li>
+                        <li>
+                            <dt><img  th:src="${cartInfo.imgUrl}"  src="img\shop1.jpg" alt=""></dt>
+                            <dd  th:onclick="'toItem('+${cartInfo.skuId}+')'">
+                                <p>
+                                    <span th:text="${cartInfo.skuName}" >TCL 55A950C 55英寸32核</span>
+                                </p>
+                            </dd>
+                        </li>
+                        <li>
+                            <p class="dj" th:text="'￥'+${cartInfo.skuPrice}" >4599.00</p>
+                        </li>
+                        <li>
+                            <p>
+                                <span>-</span>
+                                <span th:text="${cartInfo.skuNum}">5</span>
+                                <span>+</span>
+                            </p>
+                        </li>
+                        <li style="font-weight:bold"><p class="zj" th:text="'￥'+${cartInfo.cartPrice}"  >￥22995.00</p></li>
+                        <li>
+                            <p>删除</p>
+                        </li>
+                    </ol>
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+    <div class="One_ShopFootBuy fix1">
+        <div>
+            <ul>
+                <!--<li><input type="checkbox" class="allCheck" id="cha" onchange="checkAll()">全选</li>-->
+                <li>删除选中的商品</li>
+                <li>移到我的关注</li>
+                <li>清除下柜商品</li>
+            </ul>
+        </div>
+        <div>
+            <font style="color:#e64346;font-weight:bold;" class="sumNum"> </font>&nbsp;
+
+            <ul>
+                <li><img src="img/buyNumleft.png" alt=""></li>
+                <li><img src="img/buyNumright.png" alt=""></li>
+            </ul>
+        </div>
+        <div>
+            <ol>
+                <li>总价:<span style="color:#e64346;font-weight:bold;font-size:16px;" class="fnt" th:text="${totalPrice}">￥0.00</span>  </li>
+
+            </ol>
+        </div>
+        <div><button  onclick="toTrade()" type="button">去结算</button></div>
+    </div>
+</body>
+
+<script type="text/javascript">
+
+    //购物车+ -
+    //鼠标移入变小手
+    $(".One_ShopCon ul li>div:nth-child(2) ol>li:nth-child(4) p:first-child span").mouseover(function(){
+        $(this).css("cursor","pointer")
+    })
+
+    //-
+    $(".One_ShopCon ul li>div:nth-child(2) ol>li:nth-child(4) p:first-child span:first-child").click(function(){
+        var jian=$(this).next("span").html();
+        jian--;
+        if(jian<=0){
+            jian=0;
+        }
+        $(this).next("span").html(jian);
+        //总价
+        var dj=$(this).parent().parent().prev().children(".dj").html().substring(1);
+        var sl=$(this).next("span").html();
+        $(this).parent().parent().parent().children("li:nth-child(5)").children(".zj").html("￥"+dj*sl+".00")
+        sumSumPrice();
+
+    })
+
+    //+
+    $(".One_ShopCon ul li>div:nth-child(2) ol>li:nth-child(4) p:first-child span:last-child").click(function(){
+        var add=$(this).prev("span").html();
+        add++;
+        $(this).prev("span").html(add);
+        //总价
+        var dj=$(this).parent().parent().prev().children(".dj").html().substring(1);
+        var sl=$(this).prev("span").html();
+        $(this).parent().parent().parent().children("li:nth-child(5)").children(".zj").html("￥"+dj*sl+".00")
+        sumSumPrice();
+
+    })
+
+    //点击删除
+    //点击删除出现弹框
+    $(".One_isDel>p img").click(function(){
+        $(".One_mb").hide();
+        $(".One_isDel").hide();
+    })
+    $(".One_ShopCon ul li>div:nth-child(2) ol>li:nth-child(6) p:first-child").click(function(){
+        $(".One_mb").show();
+        $(".One_isDel").show();
+        var that=$(this);
+        //确定删除
+        /*        $(".One_isDel>div:last-child button:first-child").click(function(){
+                    $(".One_mb").hide();
+                    $(".One_isDel").hide();
+                    that.parent().parent().parent().parent().remove();
+                    // 移除结账固定定位
+                    // if($(".check").length==1){
+                    // 	$(".fix").remove();
+                    // }
+                    if($(".fix").offset().top>$(".fix1").offset().top){
+                        $(".fix").hide();
+                    }
+                    if($(".check").length==0){
+                        $(".allCheck").prop("checked",false);
+                        $(".sumNum").html("0");
+                        $(".fnt").html("￥ 0.00");
+                    }
+                })*/
+    })
+    //购物车全选反选
+    $(".allCheck").on("click",function(){
+        if($(".allCheck").prop("checked")){
+            // $(".check").each(function(index){
+            $(".check").prop("checked",true);
+            $(".check").parent().parent().parent().css("background","#fff4e8");
+            $(".allCheck").prop("checked",true)
+            // })
+        }else{
+            // $(".check").each(function(){
+            // $(".check").removeAttr("checked");
+            // $(".allCheck").removeAttr("checked");
+            $(".check").parent().parent().parent().css("background","none");
+            $(".check").prop("checked",false);
+            $(".allCheck").prop("checked",false)
+            // })
+        }
+    })
+
+
+
+    // $("#cha").click(function(){
+    //     if($("#cha").prop("checked")){
+    //         // $(".check").each(function(index){
+    //         $(".check").prop("checked",true);
+    //         $(".check").parent().parent().parent().css("background","#fff4e8");
+    //         $(".allCheck").prop("checked",true)
+    //         // })
+    //     }else{
+    //         // $(".check").each(function(){
+    //         // $(".check").removeAttr("checked");
+    //         // $(".allCheck").removeAttr("checked");
+    //         $(".check").parent().parent().parent().css("background","none");
+    //         $(".check").prop("checked",false);
+    //         $(".allCheck").prop("checked",false)
+    //         // })
+    //     }
+    // })
+    // $(".One_ShopFootBuy>div:first-child ul li:first-child .allCheck").click(function(){
+    //     if($(".One_ShopFootBuy>div:first-child ul li:first-child .allCheck").is(":checked")){
+    //         $(".check").prop("checked",true);
+    //         $(".check").parent().parent().parent().css("background","#fff4e8");
+    //         $(".One_ShopBottom>div:first-child span:first-child .allCheck").prop("checked",true)
+    //     }else{
+    //         $(".check").parent().parent().parent().css("background","none");
+    //         $(".check").prop("checked",false);
+    //         $(".One_ShopBottom>div:first-child span:first-child .allCheck").prop("checked",false)
+    //     }
+    // })
+    // $(".One_ShopBottom>div:first-child span:first-child .allCheck").click(function(){
+    //     if($(".One_ShopBottom>div:first-child span:first-child .allCheck").is(":checked")){
+    //         $(".check").prop("checked",true);
+    //         $(".check").parent().parent().parent().css("background","#fff4e8");
+    //     }else{
+    //         $(".check").parent().parent().parent().css("background","none");
+    //         $(".check").prop("checked",false);
+    //     }
+    // })
+    //如果子选择框没有选中则父选框取消全选
+    // $(".check").click(function(){
+    //     $(".check").each(function(){
+    //         if($(this).prop("checked")==true){
+    //             $(".allCheck").prop("checked",false);
+    //         }
+    //     })
+    // })
+    //子选择框全部选中复选框也选中
+    $(".check").on('click',function(){
+        if($(".check[class='check']:checked").length==$(".check[class='check']").length){
+            $(".allCheck").prop("checked",true)
+            //sumSumPrice();
+        }else{
+            $(".allCheck").prop("checked",false)
+        }
+    })
+    //删除已选的商品
+    $(".One_ShopFootBuy>div:first-child ul li:nth-child(2)").click(function(){
+        // $(".check").each(function(){
+        if($(".check").is(":checked")==false){
+            $(".One_mb").show();
+            $(".One_moveGzIfNull").show();
+        }else{
+            $(".One_mb").show();     //蒙版显示
+            $(".One_isDel").show();  //删除弹框显示
+            $(".One_moveGzIfNull").hide();
+        }
+        //移除结账固定定位
+        // if($(".check").length==1){
+        // 	$(".fix").remove();
+        // }
+        // })
+        //var that=$(this);
+        //确定删除
+        /*      $(".One_isDel>div:last-child button:first-child").click(function(){
+                  $(".One_mb").hide();    //蒙版隐藏
+                  $(".One_isDel").hide(); //删除弹框隐藏
+                  $(".check:checked").parent().parent().parent().parent().remove();  //删除选中商品
+                  if($(".fix").offset().top>$(".fix1").offset().top){
+                      $(".fix").hide();
+                  }
+                  if($(".check").length==0){
+                      $(".allCheck").prop("checked",false);
+                      $(".sumNum").html("0");
+                      $(".fnt").html("￥ 0.00");
+                  }
+              })*/
+    })
+    //确定删除弹框移入我的关注
+    $(".One_isDel>div:last-child button:last-child").click(function(){
+        $(".One_isDel").hide();
+        $(".One_mb").show();
+        $(".One_DengLu").show();
+    })
+    //移到我的关注
+    $(".One_ShopFootBuy>div:first-child ul li:nth-child(3)").click(function(){
+        $(".check").each(function(index){
+            if($(this).is(":checked")==false){
+                $(".One_mb").show();
+                $(".One_moveGzIfNull").show();
+            }else{
+                $(".One_mb").show();
+                $(".One_moveMyGz").show();
+                $(".One_moveGzIfNull").hide();
+            }
+        })
+    })
+    //点击×号关闭
+    $(".One_moveGzIfNull>p span:last-child img").click(function(){
+        $(".One_mb").hide();
+        $(".One_moveGzIfNull").hide();
+    })
+    $(".One_moveMyGz>p span:last-child img").click(function(){
+        $(".One_mb").hide();
+        $(".One_moveMyGz").hide();
+        $(".One_moveGzIfNull").hide();
+    })
+    $(".One_clearShop>p span:last-child img").click(function(){
+        $(".One_mb").hide();
+        $(".One_clearShop").hide();
+    })
+    //移到我的关注取消按钮点击关闭
+    $(".One_moveMyGz>div:last-child button:last-child").click(function(){
+        $(".One_mb").hide();
+        $(".One_moveMyGz").hide();
+    })
+    //移到我的关注确定按钮点击登录弹框弹出
+    $(".One_moveMyGz>div:last-child button:first-child").click(function(){
+        $(".One_moveMyGz").hide();
+        $(".One_mb").show();
+        $(".One_DengLu").show();
+    })
+
+    $(".One_DengLu>p:first-child span:last-child img").click(function(){
+        $(".One_mb").hide();
+        $(".One_DengLu").hide();
+    })
+    //清除下柜商品
+    $(".One_ShopFootBuy>div:first-child ul li:nth-child(4)").click(function(){
+        $(".One_mb").show();
+        $(".One_clearShop").show()
+    })
+
+    //选中当前商品背景变色
+    $(".check").each(function(index){
+        $(".check").eq(index).click(function(){
+            if($(this).is(":checked")){
+                $(this).parent().parent().parent().css("background","#fff4e8");
+                $(this).parent().parent().parent().parent().children("div:last-child").css("background","#fff4e8")
+            }else{
+                $(this).parent().parent().parent().parent().children("div:last-child").css("background","none")
+                $(this).parent().parent().parent().css("background","none")
+            }
+        })
+    })
+    //商品删除鼠标移入变色
+    $(".One_ShopCon ul li>div:nth-child(2) ol>li:nth-child(6) p").mouseover(function(){
+        $(this).css({"cursor":"pointer","color":"#e64346"});
+    }).mouseout(function(){
+        $(this).css({"cursor":"pointer","color":"gray"});
+    })
+    $(".One_ShopCon ul li>div:nth-child(2) ol>li:nth-child(6) p:nth-child(2)").click(function(){
+        $(".One_mb").show();
+        $(".One_moveMyGz").show();
+    })
+    $(".One_ShopCon ul li>div:nth-child(2) ol>li:nth-child(6) p:last-child").click(function(){
+        $(".One_mb").show();
+        $(".One_DengLu").show();
+    })
+
+    /*    //页面滚动删除去结算固定定位隐藏
+        $(document).scroll(function(){
+            if($(".fix").offset().top>$(".fix1").offset().top){
+                $(".fix").hide();
+            }
+        })*/
+    $(".One_isDel>div:last-child button").mouseover(function(){
+        $(this).css("cursor","pointer");
+    })
+
+    $(".One_ShopFootBuy>div:first-child ul li:not(:first-child)").mouseover(function(){
+        $(this).css({"cursor":"pointer","color":"#e64346"})
+    }).mouseout(function(){
+        $(this).css("color","black")
+    })
+
+</script>
+</html>

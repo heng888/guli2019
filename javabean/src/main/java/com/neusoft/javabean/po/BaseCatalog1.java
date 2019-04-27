@@ -1,10 +1,8 @@
 package com.neusoft.javabean.po;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Table(name = "base_catalog1")
 public class BaseCatalog1 implements Serializable {
@@ -21,6 +19,17 @@ public class BaseCatalog1 implements Serializable {
      * 分类名称
      */
     private String name;
+
+    @Transient
+    private List<BaseCatalog2> catalog2List;
+
+    public List<BaseCatalog2> getCatalog2List() {
+        return catalog2List;
+    }
+
+    public void setCatalog2List(List<BaseCatalog2> catalog2List) {
+        this.catalog2List = catalog2List;
+    }
 
     /**
      * 获取编号
