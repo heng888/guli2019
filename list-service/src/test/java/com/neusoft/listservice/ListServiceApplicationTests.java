@@ -2,9 +2,11 @@ package com.neusoft.listservice;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.neusoft.interfaces.SkuService;
+import com.neusoft.javabean.po.SkuAttrValue;
 import com.neusoft.javabean.po.SkuInfo;
 import com.neusoft.javabean.po.SkuLsInfo;
 import io.searchbox.client.JestClient;
+import io.searchbox.core.Delete;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
@@ -91,7 +93,15 @@ public class ListServiceApplicationTests {
     }
 
 
-
+    @Test
+    public void deleteEs(){
+        Delete build = new Delete.Builder("64").index("guli2019").type("SkuLsInfo").build();
+        try {
+            jestClient.execute(build);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void contextLoads() {
@@ -130,4 +140,13 @@ public class ListServiceApplicationTests {
 
     }
 
+
+    /**
+     *     将sql中的数据存放到elastic中
+     */
+    @Test
+    public void toElastic11() {
+
+
+    }
 }

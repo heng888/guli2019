@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.neusoft.managerservice.dao.BaseAttrInfoMapper" >
+  <resultMap id="BaseResultMap" type="BaseAttrInfo">
+    <id column="attrId" property="id" jdbcType="BIGINT" />
+    <result column="attr_name" property="attrName" jdbcType="VARCHAR" />
+    <result column="catalog3_id" property="catalog3Id" jdbcType="BIGINT" />
+    <result column="is_enabled" property="isEnabled" jdbcType="VARCHAR" />
+    <collection property="attrValueList" ofType="BaseAttrValue">
+      <id column="valueId" property="id" jdbcType="BIGINT" />
+      <result column="value_name" property="valueName" jdbcType="VARCHAR" />
+      <result column="attr_id" property="attrId" jdbcType="BIGINT" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    id, attr_name, catalog3_id, is_enabled
+  </sql>
+
+  <select id="getAttrListByValueId" resultMap="BaseResultMap" >
+    select info.id attrId,val.id valueId,info.attr_name,info.catalog3_id,info.attr_status,val.id valueId,
+    val.value_name,val.attr_id from base_attr_info info,base_attr_value val
+    where info.id=val.attr_id
+    and val.id in (${ids})
+  </select>
+</mapper>

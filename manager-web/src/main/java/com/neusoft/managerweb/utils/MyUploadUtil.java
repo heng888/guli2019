@@ -44,7 +44,7 @@ public class MyUploadUtil {
         } catch (MyException e) {
             e.printStackTrace();
         }
-        String url="http://172.16.13.250";
+        String url="http://192.168.255.128";
         for (int i = 0; i < upload_file.length; i++) {
             url =url+"/"+ upload_file[i];
         }

@@ -31,4 +31,6 @@ public interface SkuService {
 
     //通过键盘输入模糊查询SkuInfo
     List<SkuInfo> getSkuListBykeyWord(String keyword);
+
+   // SkuInfo toEs(Long skuInfoId);
 }

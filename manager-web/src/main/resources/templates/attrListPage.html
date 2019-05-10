@@ -90,6 +90,9 @@
             $("#dlg").dialog("open");
             // 清空attrName
             $("#attrName").textbox("setText",null);
+            //清除选定的平台属性
+            var attrValueId = $("#dg").datagrid("clearSelections");
+
             $("#dg_av").datagrid({url:''});
             $("#dg_av").datagrid('loadData', { total: 0, rows: [] });//行号初始化
             //清空表格数据

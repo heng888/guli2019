@@ -3,21 +3,26 @@ package com.neusoft.managerservice.serviceimpl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.fastjson.JSON;
 import com.neusoft.interfaces.SkuService;
-import com.neusoft.javabean.po.SkuAttrValue;
-import com.neusoft.javabean.po.SkuImage;
-import com.neusoft.javabean.po.SkuInfo;
-import com.neusoft.javabean.po.SkuSaleAttrValue;
+import com.neusoft.javabean.po.*;
 import com.neusoft.managerservice.dao.SkuAttrValueMapper;
 import com.neusoft.managerservice.dao.SkuImageMapper;
 import com.neusoft.managerservice.dao.SkuInfoMapper;
 import com.neusoft.managerservice.dao.SkuSaleAttrValueMapper;
 import com.neusoft.util.RedisUtil;
+import io.searchbox.client.JestClient;
+import io.searchbox.core.Delete;
+import io.searchbox.core.Index;
+import io.searchbox.core.Search;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.Jedis;
 import tk.mybatis.mapper.entity.Example;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 @Transactional
 @Service
@@ -32,6 +37,9 @@ public class SkuServiceImpl implements SkuService {
     SkuSaleAttrValueMapper skuSaleAttrValueMapper;
     @Autowired
     RedisUtil redisUtil;
+
+    @Autowired
+    JestClient jestClient;
 
     /**
      * 查询skuInfo信息
@@ -88,6 +96,22 @@ public class SkuServiceImpl implements SkuService {
             skuImageMapper.insert(skuImage);
         }
 
+        //将每次添加的数据存到es中
+        //toEs(skuInfoId);
+    }
+
+    /**
+     * 将每次添加的数据存到es中
+     * @param skuInfoId
+     */
+
+    public void toEs(Long skuInfoId){
+        SkuInfo skuInfo1 = skuInfoMapper.selectByPrimaryKey(skuInfoId);
+        SkuAttrValue skuAttrValue = new SkuAttrValue();
+        skuAttrValue.setSkuId(skuInfoId);
+        List<SkuAttrValue> skuAttrValueList1 = skuAttrValueMapper.select(skuAttrValue);
+        skuInfo1.setSkuAttrValueList(skuAttrValueList1);
+        //toElastic(skuInfo1);
 
     }
 
@@ -115,6 +139,13 @@ public class SkuServiceImpl implements SkuService {
 
         //删除SkuInfo
         skuInfoMapper.deleteByPrimaryKey(skuId);
+
+        Delete build = new Delete.Builder(skuId.toString()).index("guli2019").type("SkuLsInfo").build();
+        try {
+            jestClient.execute(build);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -166,6 +197,9 @@ public class SkuServiceImpl implements SkuService {
                 skuSaleAttrValueMapper.insert(skuSaleAttrValue1);
             }
         }
+
+        //将每次修改的数据更新到es中
+        //toEs(skuInfoId);
     }
 
 
@@ -296,5 +330,30 @@ public class SkuServiceImpl implements SkuService {
         return skuInfos;
     }
 
+    /**
+     *     将sql中的数据存放到elastic中
+     */
+    public void toElastic(SkuInfo skuInfo) {
 
+        // 转化es中的sku信息
+            SkuLsInfo skuLsInfo = new SkuLsInfo();
+            try {
+                BeanUtils.copyProperties(skuLsInfo,skuInfo);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+
+            String id = skuLsInfo.getId();
+
+            Index build = new Index.Builder(skuLsInfo).index("guli2019").type("SkuLsInfo").id(id).build();
+
+            try {
+                jestClient.execute(build);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+    }
 }

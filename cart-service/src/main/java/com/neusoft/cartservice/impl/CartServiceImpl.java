@@ -96,6 +96,10 @@ public class CartServiceImpl implements CartService {
                 CartInfo cartInfo = JSON.parseObject(hval, CartInfo.class);
                 cartInfos.add(cartInfo);
             }
+        }else {
+            CartInfo cartInfo = new CartInfo();
+            cartInfo.setUserId(userId);
+            cartInfos = cartInfoMaper.select(cartInfo);
         }
         return cartInfos;
     }

@@ -55,7 +55,7 @@ public class SpuController {
     }
 
     /**
-     * 根据spuId查询spuImage信息
+     * 根据spuId查询SpuSaleAttr信息
      */
     @RequestMapping("/selectSpuAll")
     @ResponseBody

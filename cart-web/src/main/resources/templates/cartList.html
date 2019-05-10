@@ -83,7 +83,7 @@
                 <li>删除商品？</li>
                 <li>您可以选择移到关注，或删除商品。</li>
             </dd>
-            </dl>
+        </dl>
     </div>
     <div>
         <button type="button">删除</button>
@@ -110,7 +110,7 @@
                 <li>移到关注</li>
                 <li>移动后选中商品将不再购物车中显示</li>
             </dd>
-            </dl>
+        </dl>
     </div>
     <div>
         <button type="button">确定</button>
@@ -138,24 +138,24 @@
 <script type="text/javascript">
 
     function toTrade(){
-         window.location.href="http://order.neusoft.com:8081/toTrade";
+        window.location.href="http://order.neusoft.com:8081/toTrade";
     }
     function toItem(skuId) {
         window.location.href="http://item.neusoft.com:8088/"+skuId+".html";
     }
 
     function login(){
-      var s = encodeURIComponent("http://cart.neusoft.com:8087/cartList");
-       window.location.href="http://passport.neusoft.com/index?originUrl="+s;
+        var s = encodeURIComponent("http://cart.neusoft.com:8087/cartList");
+        window.location.href="http://passport.neusoft.com/index?originUrl="+s;
     }
 
     function checkSku( chkbox){
-       var skuId= $(chkbox).attr("value");
-       var checked=$(chkbox).prop("checked");
-       var isCheckedFlag="0";
-       if(checked){
-           isCheckedFlag="1";
-       }
+        var skuId= $(chkbox).attr("value");
+        var checked=$(chkbox).prop("checked");
+        var isCheckedFlag="0";
+        if(checked){
+            isCheckedFlag="1";
+        }
         var param="isChecked="+isCheckedFlag+"&"+"skuId="+skuId;
         $.post("checkCart",param,function (html) {
             $("#cartListInner").html(html)
@@ -164,35 +164,35 @@
     }
 
     function checkAll(){
-         var cc = $(".check");
-         var cartList = {};
-         $(cc).each(function (i,sku) {
-             cartList[i] = $(sku).val();
-         })
+        var cc = $(".check");
+        var cartList = {};
+        $(cc).each(function (i,sku) {
+            cartList[i] = $(sku).val();
+        })
 
     }
 
 
-     //封装总价钱函数
-     // function sumSumPrice(){
-     //    var zzj=0;
-     //    $(".check").each(function () {
-     //        if($(this).prop("checked")){
-     //            var zj = $(this).parents("ol").find(".zj").html().substring(1);
-     //             zzj=zzj+parseFloat(zj);
-     //        }
-     //        $(".fnt").html("￥"+zzj+".00")
-     //    });
-     // }
+    //封装总价钱函数
+    // function sumSumPrice(){
+    //    var zzj=0;
+    //    $(".check").each(function () {
+    //        if($(this).prop("checked")){
+    //            var zj = $(this).parents("ol").find(".zj").html().substring(1);
+    //             zzj=zzj+parseFloat(zj);
+    //        }
+    //        $(".fnt").html("￥"+zzj+".00")
+    //    });
+    // }
 
-/*    //购物车结算固定定位
-    $(document).scroll(function(){
-        if($(window).scrollTop()>50){
-            $(".fix").hide();
-        }else{
-            $(".fix").show();
-        }
-    })*/
+    /*    //购物车结算固定定位
+        $(document).scroll(function(){
+            if($(window).scrollTop()>50){
+                $(".fix").hide();
+            }else{
+                $(".fix").show();
+            }
+        })*/
 
 
     //购物车顶端tab
@@ -305,10 +305,10 @@
             $(".fnt").html("￥"+zzj+".00")
         })
 
-/*        $(".One_ShopCon ul li>div:nth-child(2) ol li:nth-child(5) .zj").each(function(){
-            kong+=parseFloat($(this).html().substring(1))
-        })
-        $(".fnt").html("￥"+kong+".00")*/
+        /*        $(".One_ShopCon ul li>div:nth-child(2) ol li:nth-child(5) .zj").each(function(){
+                    kong+=parseFloat($(this).html().substring(1))
+                })
+                $(".fnt").html("￥"+kong+".00")*/
     }
     //封装总数量函数
     function sumSumNum(){

@@ -261,7 +261,8 @@
 						<div class="box-btns clear">
 							<div class="box-btns-one">
 								<form id="itemForm" action="http://cart.neusoft.com:8091/addToCart" method="post">
-									<input type="text" name="skuNum" id="numaa"  value="1"/>
+									<input type="text" name="skuNum" id="numaa"  value="1" onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'1')}else{this.value=this.value.replace(/\D/g,'1')}"/>
+										   <!--onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'0')}else{this.value=this.value.replace(/\D/g,'1')}"-->
 									<input type="hidden"/>
 
 									<div class="box-btns-one1">
@@ -288,12 +289,12 @@
 							</div>
 						</div>
 
-						 
+
 					</div>
 
 				</div>
 			</div>
-			 
+
 
 
 		</div>
@@ -339,6 +340,10 @@
             if(canClick=='0'){
                 return ;
             }
+            // if(numReduce<1){
+            //     alert("加入购物车的产品数量必须大于0")
+            //     return ;
+            // }
             $("#itemForm").submit();
         }
 

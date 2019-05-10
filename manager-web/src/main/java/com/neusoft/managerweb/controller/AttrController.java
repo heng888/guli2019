@@ -24,6 +24,7 @@ public class AttrController {
     @ResponseBody
     public List<BaseCatalog1> selectBaseCatalog1(){
         List<BaseCatalog1> baseCatalog1s = managerService.selectBaseCatalog1();
+        List<BaseCatalog1> baseCatalog1s1 = managerService.selectAllCatalog();
         return baseCatalog1s;
     }
 

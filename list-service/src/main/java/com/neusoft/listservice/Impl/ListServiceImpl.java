@@ -39,31 +39,30 @@ public class ListServiceImpl implements ListService {
     @Override
     public List<SkuLsInfo> search(SkuLsParam skuLsParam) {
 
-        //如果三级分类id不为空，查询数据存放到elasticSearch
-        if(skuLsParam!=null){
-            toElastic(skuLsParam);
-        }
         List<SkuLsInfo> skuLsInfos = new ArrayList<>();
-        //如何查询es中的数据
-        Search search = new Search.Builder(getMyDsl(skuLsParam)).addIndex("guli2019").addType("SkuLsInfo").build();
 
-        try {
-            SearchResult execute = jestClient.execute(search);
-            List<SearchResult.Hit<SkuLsInfo, Void>> hits = execute.getHits(SkuLsInfo.class);
-            for (SearchResult.Hit<SkuLsInfo, Void> hit : hits) {
-                SkuLsInfo source = hit.source;
-                Map<String, List<String>> highlight = hit.highlight;
-                if(hit.highlight!=null){
-                    List<String> skuName = highlight.get("skuName");
-                    String s = skuName.get(0);
-                    source.setSkuName(s);
+        //如果三级分类id不为空，查询数据存放到elasticSearch
+
+            if(skuLsParam.getCatalog3Id()!=null || skuLsParam.getKeyword()!=null&&skuLsParam.getKeyword().trim().length()>0){
+                //如何查询es中的数据
+                Search search = new Search.Builder(getMyDsl(skuLsParam)).addIndex("guli2019").addType("SkuLsInfo").build();
+                try {
+                    SearchResult execute = jestClient.execute(search);
+                    List<SearchResult.Hit<SkuLsInfo, Void>> hits = execute.getHits(SkuLsInfo.class);
+                    for (SearchResult.Hit<SkuLsInfo, Void> hit : hits) {
+                        SkuLsInfo source = hit.source;
+                        Map<String, List<String>> highlight = hit.highlight;
+                        if(hit.highlight!=null){
+                            List<String> skuName = highlight.get("skuName");
+                            String s = skuName.get(0);
+                            source.setSkuName(s);
+                        }
+                        skuLsInfos.add(source);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                skuLsInfos.add(source);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         return skuLsInfos;
     }
 

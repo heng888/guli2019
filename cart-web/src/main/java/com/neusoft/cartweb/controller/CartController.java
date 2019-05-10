@@ -47,6 +47,7 @@ public class CartController {
      * 购物车商品状态改变
      * @return
      */
+    @LoginRequire(ifNeedSuccess = false)
     @RequestMapping("checkCart")
     public String checkCart(HttpServletRequest request,HttpServletResponse response,ModelMap map,CartInfo cartInfo){
         String userId=(String) request.getAttribute("userId");
@@ -57,6 +58,9 @@ public class CartController {
             //更新db和缓存
             cartInfo.setUserId(userId);
             cartService.updateCartCheck(cartInfo);
+            //更新数据后将最新数据查询出来
+            //取缓存数据
+            cartInfos = cartService.getCatCache(userId);
         }else{
             //更新
             //取cookie中的数据
@@ -74,7 +78,7 @@ public class CartController {
             CookieUtil.setCookie(request,response,"cartListCookie",JSON.toJSONString(cartInfos),60*60*24*7,true);
         }
 
-        //更新数据后将最新数据查询出来
+       /* //更新数据后将最新数据查询出来
         if(StringUtils.isBlank(userId)){
             //取cookie中的数据
             String cartListCookie = CookieUtil.getCookieValue(request, "cartListCookie", true);
@@ -84,7 +88,7 @@ public class CartController {
         }else{
             //取缓存数据
             cartInfos = cartService.getCatCache(userId);
-        }
+        }*/
 
         for (CartInfo cartInfo1 : cartInfos) {
             if("1".equals(cartInfo1.getIsChecked())){
@@ -117,6 +121,10 @@ public class CartController {
         }else{
             //取缓存数据
             cartInfos = cartService.getCatCache(userId);
+            if (cartInfos == null) {
+
+                }
+
         }
 
             for (CartInfo cartInfo : cartInfos) {

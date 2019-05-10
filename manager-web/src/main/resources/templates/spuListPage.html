@@ -107,14 +107,16 @@
 
 
     function showSkuInfoList() {
-        // 打开sku对话框
-        $("#skulist_dlg").dialog("open");
+
         // spuInfo
         var spuInfo = $("#spulist_dg").datagrid("getSelected");
 
         if(spuInfo){
+            // 打开sku对话框
+            $("#skulist_dlg").dialog("open");
             // 初始化sku数据列表
             initSkuListDatagrid(spuInfo);
+
         }else{
             alert("请选择SPU")
         }
@@ -161,9 +163,9 @@
 
         if(ctg3ForSpuList){
             // spu名称 初始化
-            $("#spuName").textbox("setText",null);
+            $("#spuName").textbox("setValue",null);
             // spu描述 初始化
-            $("#description").textbox("setText",null);
+            $("#description").textbox("setValue",null);
             // spu描述 初始化
             $("#spuId").val('');
             //清空缓存
